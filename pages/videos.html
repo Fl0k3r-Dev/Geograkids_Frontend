@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeograKids</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+    <script src="../scripts/scripts.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
+                    <h1>GeograKids Wiki</h1>
+                </div>
+            </a>
+            <div class="user-info">                
+                <nav>                   
+                    <a href="#" class="btn">Login</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="videos-section">
+            <h2>Vídeos</h2>
+
+            <div class="category">
+                <h3>Categoria 1</h3>
+                <div class="video-list">
+                    <div class="video-item">
+                        <h4>Apresentação</h4>
+                        <p>Vídeo com uma breve apresentação do sistema GeograKids</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/Apresentacao_Sistema_Wiki.mp4" controls></video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <h4>Aula passeio</h4>
+                        <p>Explicação e exemplos do que é e como realizar uma aula passeio</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/aula_passeio.mp4" controls></video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <h4>Dicas</h4>
+                        <p>10 Dicas para você desenvolver um Passeio Pedagógico com seus alunos!.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/10_dicas.mp4" controls></video>
+                        </div>
+                    </div>
+                    <div class="video-item">
+                        <h4>Problemas ambientais urbanos</h4>
+                        <p>Videoaula sobre problemas ambientais urbanos e compreenda quais são as principais questões ambientais que afligem as grandes cidades.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/Problemas_ambientais_urbanos.mp4" controls></video>
+                        </div>
+                    </div>                                        
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Sobre Nós</a>
+            <a href="#">Contato</a>
+            <a href="#">Política de Privacidade</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="../assets/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="../assets/linkedin.png" alt="Linkedin"></a>
+            <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
+        </div>
+        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal para o player de vídeo expandido -->
+    <div id="videoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <video id="expandedVideo" controls></video>
+        </div>
+    </div>
+    
+    <script src="../scripts/scripts.js"></script>
+</body>
+</html>

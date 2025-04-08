@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeograKids</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+    <script src="../scripts/scripts.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
+                    <h1>GeograKids Wiki</h1>
+                </div>
+            </a>
+            <div class="user-info">                
+                <nav>                   
+                    <a href="#" class="btn">Login</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <h2>Álbuns de Fotos</h2>
+        <div class="album-grid">
+            <div class="album">
+                <img src="../assets/fotos/aula passeio 1.jpg" alt="Álbum 1">
+                <p>Aula passeio</p>
+            </div>
+            <div class="album">
+                <img src="../assets/fotos/problemas ambientais 1.jpg" alt="Álbum 2">
+                <p>Problemas ambientais</p>
+            </div>
+            <!--<div class="album">
+                <img src="foto1.jpg" alt="Álbum 3">
+                <p>Álbum 3</p>
+            </div>-->
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Sobre Nós</a>
+            <a href="#">Contato</a>
+            <a href="#">Política de Privacidade</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="linkedin.png" alt="Linkedin"></a>
+            <a href="#"><img src="instagram.png" alt="Instagram"></a>
+        </div>
+        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="album-modal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="album-photo" src="../assets/foto1.jpg" alt="Foto do Álbum">
+            <div class="photo-navigation">
+                <button id="prev-photo">&lt;</button>
+                <button id="next-photo">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

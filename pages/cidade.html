@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeograKids</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+    <script src="../scripts/scripts.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
+                    <h1>GeograKids Wiki</h1>
+                </div>
+            </a>
+            <div class="user-info">                
+                <nav>                   
+                    <a href="#" class="btn">Login</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="geography-section">
+            <h2>Áreas Geográficas de Bauru</h2>
+
+            <div class="geography-item">
+                <h3>Rio Batalha</h3>
+                <p>O Rio Batalha é um dos principais rios que atravessam Bauru, sendo responsável pelo abastecimento de água da cidade.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3717.580126680825!2d-49.08359958546257!3d-22.337635723085904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf67af4c7f35d1%3A0xd47bc0e7b3a00d4!2sRio%20Batalha!5e0!3m2!1sen!2sbr!4v1614783137590!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="geography-item">
+                <h3>Ribeirão das Flores</h3>
+                <p>O Ribeirão das Flores é um afluente do Rio Batalha e passa por várias áreas urbanas e rurais de Bauru.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.6743270799474!2d-49.05842868465722!3d-22.291513985314675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf6754fb0aeae5%3A0x2db7b22d36d7ef1!2sRibeir%C3%A3o%20das%20Flores!5e0!3m2!1sen!2sbr!4v1614783343498!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="geography-item">
+                <h3>Córrego Água Comprida</h3>
+                <p>O Córrego Água Comprida é outro afluente importante que corta a cidade de Bauru, contribuindo para o sistema hídrico local.</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.690543164897!2d-49.081996084659194!3d-22.279340885343657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf66ad29934e29%3A0x26f4efb160290b5!2sC%C3%B3rrego%20%C3%81gua%20Comprida!5e0!3m2!1sen!2sbr!4v1614783454941!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Sobre Nós</a>
+            <a href="#">Contato</a>
+            <a href="#">Política de Privacidade</a>
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="../assets/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="../assets/linkedin.png" alt="Linkedin"></a>
+            <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
+        </div>
+        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal para o mapa expandido -->
+    <div id="mapModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <iframe id="expandedMap" src="" frameborder="0" style="border:0; width: 100%; height: 80vh;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+    
+    <script src="../scripts/scripts.js"></script>
+</body>
+</html>

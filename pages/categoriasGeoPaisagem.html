@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeograKids</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+    <script src="../scripts/scripts.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
+                    <h1>GeograKids Wiki</h1>
+                </div>
+            </a>
+            <div class="user-info">                
+                <nav>                   
+                    <a href="#" class="btn">Login</a>
+                </nav>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="overlay-menu">
+            <nav>
+                <a href="#">Home</a>
+                <a href="../pages/categoriasGeo.html">Categorias</a>
+                <a href="#">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <a href="../pages/categoriasGeo.html" class="back-link">← Voltar para Categorias</a>
+        <h1>Paisagem 1</h1>
+        <h2>Descrição do paisagem 1 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos1')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs1')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides1')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos1')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos1')">Fotos</button>
+        </div>
+
+        <section id="Textos1" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra texto explicativo sobre o conceito de Paisagem na geografia.</p>
+                <a href="../assets/paisagem/conceito de paisagem.pdf" class="download-link">Baixar Texto PDF</a>
+            </article>
+        </section>
+
+        <section id="PDFs1" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../assets/paisagem/16_Artigo+14.pdf" class="download-link">CONCEPÇÕES SOBRE O CONCEITO DE PAISAGEM E SUA INSERÇÃO NO ENSINO DE GEOGRAFIA</a></li>                
+            </ul>
+        </section>
+
+        <section id="Slides1" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../assets/paisagem/apresentação.pdf" class="download-link">Apresentação 1</a></li>               
+            </ul>
+        </section>
+
+        <section id="Videos1" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/eltqI5Psek0?si=vyFgdxrGdoVZ8Qv6" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Paisagem.</p>
+            </div>
+        </section>
+
+        <section id="Fotos1" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../assets/paisagem/images.jpeg" alt="Foto relacionada a Paisagem 1">
+                <img src="../assets/paisagem/images (1).jpeg" alt="Foto relacionada a Paisagem 1">
+                <img src="../assets/paisagem/images (2).jpeg" alt="Foto relacionada a Paisagem 1">
+            </div>
+        </section>
+
+        <!-- Paisagem 2 -->
+        <h1>Paisagem 2</h1>
+        <h2>Descrição do Paisagem 2 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos2')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs2')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides2')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos2')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos2')">Fotos</button>
+        </div>
+
+        <section id="Textos2" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra textos explicativos sobre o conceito de Paisagem na geografia...</p>
+                <a href="../assets/ texto_Paisagem2.pdf" class="download-link">Baixar Texto PDF</a>
+            </article>
+        </section>
+
+        <section id="PDFs2" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../assets/material_Paisagem_2_1.pdf" class="download-link">Material Didático - Paisagem 1</a></li>
+                <li><a href="../assets/material_Paisagem_2_2.pdf" class="download-link">Material Didático - Paisagem 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Slides2" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../assets/slides_Paisagem_2_1.pptx" class="download-link">Apresentação 1</a></li>
+                <li><a href="../assets/slides_Paisagem_2_2.pptx" class="download-link">Apresentação 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Videos2" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO2" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Paisagem.</p>
+            </div>
+        </section>
+
+        <section id="Fotos2" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../assets/foto2_1.jpg" alt="Foto relacionada a Paisagem 2">
+                <img src="../assets/foto2_2.jpg" alt="Foto relacionada a Paisagem 2">
+                <img src="../assets/foto2_3.jpg" alt="Foto relacionada a Paisagem 2">
+            </div>
+        </section>
+
+        <!-- Paisagem 3 -->
+        <h1>Paisagem 3</h1>
+        <h2>Descrição do Paisagem 3 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos3')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs3')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides3')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos3')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos3')">Fotos</button>
+        </div>
+
+        <section id="Textos3" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra textos explicativos sobre o conceito de Paisagem na geografia...</p>
+                <a href="../assets/texto_Paisagem3.pdf" class="download-link">Baixar Texto PDF</a>
+            </article>
+        </section>
+
+        <section id="PDFs3" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../assets/material_Paisagem_3_1.pdf" class="download-link">Material Didático - Paisagem 1</a></li>
+                <li><a href="../assets/material_Paisagem_3_2.pdf" class="download-link">Material Didático - Paisagem 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Slides3" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../assets/slides_Paisagem_3_1.pptx" class="download-link">Apresentação 1</a></li>
+                <li><a href="../assets/slides_Paisagem_3_2.pptx" class="download-link">Apresentação 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Videos3" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO3" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Paisagem.</p>
+            </div>
+        </section>
+
+        <section id="Fotos3" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../assets/foto3_1.jpg" alt="Foto relacionada a Paisagem 3">
+                <img src="../assets/foto3_2.jpg" alt="Foto relacionada a Paisagem 3">
+                <img src="../assets/foto3_3.jpg" alt="Foto relacionada a Paisagem 3">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GeograKids Wiki. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeograKids</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+    <script src="../scripts/scripts.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
+                    <h1>GeograKids Wiki</h1>
+                </div>
+            </a>
+            <div class="user-info">                
+                <nav>                   
+                    <a href="#" class="btn">Login</a>
+                </nav>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="overlay-menu">
+            <nav>
+                <a href="#">Home</a>
+                <a href="../pages/categoriasGeo.html">Categorias</a>
+                <a href="#">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <a href="../pages/categoriasGeo.html" class="back-link">← Voltar para Categorias</a>
+        <h1>Território 1</h1>
+        <h2>Descrição do Território 1 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos1')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs1')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides1')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos1')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos1')">Fotos</button>
+        </div>
+
+        <section id="Textos1" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra textos explicativos sobre o conceito de Território na geografia...</p>
+                <a href="../territorio/TABELA ABR 2024.pdf" class="download-link">TERRITÓRIO E GEOGRAFIA ESCOLAR</a>
+            </article>
+        </section>
+
+        <section id="PDFs1" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../territorio/EDIÇÃO+-+59835+O+ENTORNO+DA+ESCOLA+COMO+TERRITÓRIO+USADO+UMA+ESCALA+DE+PLANEJAMENTO+E+AÇÃO_revisão_final.pdf" class="download-link">O ENTORNO DA ESCOLA COMO TERRITÓRIO USADO</a></li>                
+            </ul>
+        </section>
+
+        <section id="Slides1" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../territorio/04_10_geografia_desenhoefoto.pdf" class="download-link">O DESENHO E A FOTOGRAFIA COMO ALTERNATIVAS
+                    METODOLÓGICAS PARA O ENSINO DE GEOGRAFIA</a></li>                
+            </ul>
+        </section>
+
+        <section id="Videos1" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ovyse--cj-g?si=Bm8B83f8WU278TAN" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Território.</p>
+            </div>
+        </section>
+
+        <section id="Fotos1" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../territorio/7e5bfe25e894b85ea1a65610f3b8b444.jpg" alt="Foto relacionada a Território 1">
+                <img src="../territorio/divisao-regional-do-brasil-og.jpg" alt="Foto relacionada a Território 1">
+                <img src="../territorio/infoenem.com.br-espaco-lugar-paisagem-e-territorio-nao-sao-sinonimos-t1.jpg" alt="Foto relacionada a Território 1">
+            </div>
+        </section>
+
+        <!-- Território 2 -->
+        <h1>Território 2</h1>
+        <h2>Descrição do Território 2 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos2')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs2')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides2')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos2')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos2')">Fotos</button>
+        </div>
+
+        <section id="Textos2" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra textos explicativos sobre o conceito de Território na geografia...</p>
+                <a href="../territorio/texto_Território2.pdf" class="download-link">Baixar Texto PDF</a>
+            </article>
+        </section>
+
+        <section id="PDFs2" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../territorio/material_Território_2_1.pdf" class="download-link">Material Didático - Território 1</a></li>
+                <li><a href="../territorio/material_Território_2_2.pdf" class="download-link">Material Didático - Território 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Slides2" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../territorio/slides_Território_2_1.pptx" class="download-link">Apresentação 1</a></li>
+                <li><a href="../territorio/slides_Território_2_2.pptx" class="download-link">Apresentação 2</a></li>
+            </ul>
+        </section>
+
+        <section id="Videos2" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO2" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Território.</p>
+            </div>
+        </section>
+
+        <section id="Fotos2" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../territorio/foto2_1.jpg" alt="Foto relacionada a Território 2">
+                <img src="../territorio/foto2_2.jpg" alt="Foto relacionada a Território 2">
+                <img src="../territorio/foto2_3.jpg" alt="Foto relacionada a Território 2">
+            </div>
+        </section>
+
+        <!-- Território 3 -->
+        <h1>Território 3</h1>
+        <h2>Descrição do Território 3 com os materiais disponíveis:</h2>
+        <div class="tab-container">
+            <button class="tab-link active" onclick="openTab(event, 'Textos3')">Textos</button>
+            <button class="tab-link" onclick="openTab(event, 'PDFs3')">PDFs</button>
+            <button class="tab-link" onclick="openTab(event, 'Slides3')">Apresentações de Slides</button>
+            <button class="tab-link" onclick="openTab(event, 'Videos3')">Vídeos</button>
+            <button class="tab-link" onclick="openTab(event, 'Fotos3')">Fotos</button>
+        </div>
+
+        <section id="Textos3" class="tab-content active">
+            <h3>Textos</h3>
+            <article>
+                <p>Aqui você encontra textos explicativos sobre o conceito de Território na geografia...</p>
+                <a href="../territorio/texto_Território3.pdf" class="download-link">Baixar Texto PDF</a>
+            </article>
+        </section>
+
+        <section id="PDFs3" class="tab-content">
+            <h3>PDFs</h3>
+            <ul>
+                <li><a href="../territorio/material_Território_3_1.pdf" class="download-link">Material Didático - Território 3</a></li>
+            </ul>
+        </section>
+
+        <section id="Slides3" class="tab-content">
+            <h3>Apresentações de Slides</h3>
+            <ul>
+                <li><a href="../territorio/slides_Território_3_1.pptx" class="download-link">Apresentação 1</a></li>
+            </ul>
+        </section>
+
+        <section id="Videos3" class="tab-content">
+            <h3>Vídeos</h3>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO3" frameborder="0" allowfullscreen></iframe>
+                <p>Descrição do vídeo sobre Território.</p>
+            </div>
+        </section>
+
+        <section id="Fotos3" class="tab-content">
+            <h3>Fotos</h3>
+            <div class="photo-gallery">
+                <img src="../territorio/foto3_1.jpg" alt="Foto relacionada a Território 3">
+                <img src="../territorio/foto3_2.jpg" alt="Foto relacionada a Território 3">
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>GeograKids Wiki - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../scripts/scripts.js"></script>
+</body>
+</html>
