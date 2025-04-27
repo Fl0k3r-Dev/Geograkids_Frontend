@@ -79,7 +79,8 @@
     async function fetchData(metodo, endpoint, formData) {
       try {
         const response = await $.ajax({
-          url: `http://127.0.0.1:8000/${endpoint.toLowerCase()}`,
+          // url: `http://127.0.0.1:8000/${endpoint.toLowerCase()}`,
+          url: `${window.location.origin}/${endpoint.toLowerCase()}`,
           type: metodo,
           data: formData,
           processData: false,  // Impede que o jQuery tente processar os dados
