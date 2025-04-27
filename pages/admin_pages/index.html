@@ -17,6 +17,8 @@
     <div class="sidebar bg-dark text-white p-4" style="width: 250px; min-height: 100vh;">
       <h2 class="text-center">Administração</h2>
       <ul class="nav flex-column" id="menu-list">
+        <!-- PRIMEIRO PASSO: CRIAR UM NOVO ITEM AQUI PARA O MENU
+             SEGUNDO PASSO: NOMEAR A VARIAVEL DO data-section  -->
         <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Dashboard">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Referencias">Cadastro de Referências</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Livros">Cadastro de Livros</a></li> <!-- FALTA CADASTRAR PDF MESMO -->
@@ -60,6 +62,9 @@
         .toLowerCase();
     }
   
+    //TERCEIRO PASSO: 
+    // CHAVE = NOME DA VARIAVEL NO data-section
+    // VALOR = CAMPOS DA TABELA E DE CADASTRO DO MODAL
     const fieldsBySection = {
       Referencias: ["Titulo", "Autor", "Descrição", "Referência", "Link"],
       Livros: ["Título", "Autor", "Descrição", "PDF"],
