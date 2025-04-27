@@ -71,19 +71,21 @@
       Cartografia: ["Título", "Descrição", "Link"],
     };
   
-    function fetchData(metodo, endpoint, data = {}) {
-      return $.ajax({
-        url: `http://127.0.0.1:8000/${endpoint.toLowerCase()}`,
-        type: metodo,
-        contentType: "application/json",
-        data: metodo === "GET" ? null : JSON.stringify(data),
-        success: function(response) {
-          console.log("Resposta da API:", response);
-        },
-        error: function(xhr, status, error) {
-          console.error("Erro na requisição:", status, error, xhr.responseText);
-        }
-      });
+    async function fetchData(metodo, endpoint, formData) {
+      try {
+        const response = await $.ajax({
+          url: `http://127.0.0.1:8000/${endpoint.toLowerCase()}`,
+          type: metodo,
+          data: formData,
+          processData: false,  // Impede que o jQuery tente processar os dados
+          contentType: false,  // Deixa o navegador definir o Content-Type corretamente (multipart/form-data)
+        });
+        console.log("Resposta da API:", response);
+        return response;  // Retorna a resposta para quem chamou a função
+      } catch (xhr) {
+        console.error("Erro na requisição:", xhr.statusText, xhr.responseText);
+        throw new Error(`Erro na requisição: ${xhr.statusText}`);
+      }
     }
   
     async function loadSection(section) {
@@ -152,10 +154,17 @@
       $("#modalLabel").text(section.replace('cadastro', 'Cadastro de '));
       let modalContent = fields.map(field => {
         const key = normalizeText(field);
-        return `<div class="mb-3">
-                  <label class="form-label">${field}</label>
-                  <input type="text" class="form-control" id="${key}" value="${data[key] || ''}">
-                </div>`;
+        if (key.toLowerCase() === "imagem" || key.toLowerCase() === "video" || key.toLowerCase() === "pdf") {
+          return `<div class="mb-3">
+            <label class="form-label">${field}</label>
+            <input type="file" class="form-control" id="${key}">
+            </div>`;
+        } else {
+          return `<div class="mb-3">
+            <label class="form-label">${field}</label>
+            <input type="text" class="form-control" id="${key}" value="${data[key] || ''}">
+            </div>`;
+        }
       }).join("");
       $("#modalBody").html(modalContent);
       $("#modalSubmit").off('click').on('click', function() {
@@ -166,26 +175,58 @@
   
     async function saveItem(section, id) {
       const fields = fieldsBySection[section];
-      let payload = {};
+      let formData = new FormData();
+
       fields.forEach(field => {
         const key = normalizeText(field);
-        let value = document.getElementById(key).value;
-        payload[key] = value;
+        let input = document.getElementById(key);
+
+        if (!input) {
+          console.warn(`Campo ${key} não encontrado!`);
+          return;
+        }
+
+        let value = input.value;
+        formData.append(key, value);
       });
 
-      console.log(payload)
-  
-      if (id) {
-        payload["id"] = id;
-        await fetchData("PUT", `${section}/${id}`, payload);
-      } else {
-        await fetchData("POST", section, payload);
+      const fileInputs = ["pdf", "imagem", "video"];
+      
+      fileInputs.forEach(fileType => {
+        const input = document.getElementById(fileType);
+        
+        if (input && input.files.length > 0) {
+          const file = input.files[0];
+          
+          if (fileType === "pdf" && file.type === "application/pdf") {
+            formData.append("pdf", file);
+          } else if (fileType === "imagem" && file.type.startsWith("image/")) {
+            formData.append("imagem", file);
+          } else if (fileType === "video" && file.type.startsWith("video/")) {
+            formData.append("video", file);
+          } else {
+            console.warn(`Tipo de arquivo inválido para ${fileType}: ${file.type}`);
+          }
+        }
+      });
+
+      try {
+        if (id) {
+          formData.append("id", id);
+          await fetchData("PUT", `${section}/${id}`, formData);
+        } else {
+          await fetchData("POST", section, formData);
+        }
+
+        loadSection(section);
+        bootstrap.Modal.getInstance(document.getElementById("dynamicModal")).hide();
+      } catch (error) {
+        console.error("Erro ao salvar item:", error);
+        alert("Erro ao salvar. Veja o console.");
       }
-  
-      loadSection(section);
-      bootstrap.Modal.getInstance(document.getElementById("dynamicModal")).hide();
     }
-  
+
+
     async function deleteItem(section, id) {
       if (confirm("Tem certeza que deseja excluir?")) {
         await fetchData("DELETE", `${section}/${id}`);
