@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -30,17 +30,7 @@
         <h2>Álbuns de Fotos</h2>
         <div class="album-grid">
             <div class="album">
-                <img src="../assets/fotos/aula passeio 1.jpg" alt="Álbum 1">
-                <p>Aula passeio</p>
             </div>
-            <div class="album">
-                <img src="../assets/fotos/problemas ambientais 1.jpg" alt="Álbum 2">
-                <p>Problemas ambientais</p>
-            </div>
-            <!--<div class="album">
-                <img src="foto1.jpg" alt="Álbum 3">
-                <p>Álbum 3</p>
-            </div>-->
         </div>
     </main>
 
@@ -68,6 +58,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.querySelector(".album-grid");
+
+    try {
+      const response = await fetch("http://localhost:8000/fotos");
+      const albuns = await response.json();
+
+      container.innerHTML = "";
+
+      albuns.forEach(album => {
+        const item = document.createElement("div");
+        item.className = "album";
+        console.log(album);
+        item.innerHTML = `
+          <img src="http://localhost:8000/${album.caminhoImagem}" alt="${album.titulo}">
+          <p>${album.descricao}</p>
+        `;
+
+        container.appendChild(item);
+      });
+
+    } catch (err) {
+      console.error("Erro ao buscar álbuns:", err);
+      container.innerHTML = "<p style='color:red;'>Erro ao carregar os álbuns de fotos.</p>";
+    }
+  });
+</script>
+
 
 </body>
 </html>

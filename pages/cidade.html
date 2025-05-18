@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -29,31 +29,7 @@
     <main>
         <section class="geography-section">
             <h2>Áreas Geográficas de Bauru</h2>
-
-            <div class="geography-item">
-                <h3>Rio Batalha</h3>
-                <p>O Rio Batalha é um dos principais rios que atravessam Bauru, sendo responsável pelo abastecimento de água da cidade.</p>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3717.580126680825!2d-49.08359958546257!3d-22.337635723085904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf67af4c7f35d1%3A0xd47bc0e7b3a00d4!2sRio%20Batalha!5e0!3m2!1sen!2sbr!4v1614783137590!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-
-            <div class="geography-item">
-                <h3>Ribeirão das Flores</h3>
-                <p>O Ribeirão das Flores é um afluente do Rio Batalha e passa por várias áreas urbanas e rurais de Bauru.</p>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.6743270799474!2d-49.05842868465722!3d-22.291513985314675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf6754fb0aeae5%3A0x2db7b22d36d7ef1!2sRibeir%C3%A3o%20das%20Flores!5e0!3m2!1sen!2sbr!4v1614783343498!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-
-            <div class="geography-item">
-                <h3>Córrego Água Comprida</h3>
-                <p>O Córrego Água Comprida é outro afluente importante que corta a cidade de Bauru, contribuindo para o sistema hídrico local.</p>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.690543164897!2d-49.081996084659194!3d-22.279340885343657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94bf66ad29934e29%3A0x26f4efb160290b5!2sC%C3%B3rrego%20%C3%81gua%20Comprida!5e0!3m2!1sen!2sbr!4v1614783454941!5m2!1sen!2sbr" width="100%" height="200" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-
+            <div id="geography-container"></div>
         </section>
     </main>
 
@@ -80,5 +56,43 @@
     </div>
     
     <script src="../scripts/scripts.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+    fetchCartografiaData();
+});
+
+async function fetchCartografiaData() {
+    try {
+        const response = await fetch("http://localhost:8000/cartografia/");
+        const data = await response.json();
+        renderCartografia(data);
+    } catch (error) {
+        console.error("Erro ao buscar dados de cartografia:", error);
+    }
+}
+
+function renderCartografia(itens) {
+    const container = document.getElementById("geography-container");
+    container.innerHTML = "";
+
+    itens.forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("geography-item");
+        console.log(item.link);
+        div.innerHTML = `
+            <h3>${item.titulo}</h3>
+            <p>${item.descricao}</p>
+            <div class="map-container">
+                ${item.link}
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+    </script>
 </body>
 </html>

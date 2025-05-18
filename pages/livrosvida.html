@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -28,24 +28,7 @@
     
     <main>
         <h2>Livros da vida</h2>
-        <div class="activity-card">
-            <h3>LIVROS DA VIDA: MEMÓRIAS DAS CRIANÇAS
-                E/EM PRÁTICAS PEDAGÓGICAS NA EDUCAÇÃO
-                INFANTIL1</h3>
-            <p>Esta pesquisa de Mestrado teve como objetivo analisar as contribuições do Livro da Vida,
-                como instrumento mediador da memória das crianças sobre suas vivências no cotidiano
-                escolar.</p>
-            <a href="../assets/livrosvida/cchsa_ppgedu_me_Gabriela_MR.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-
-        <div class="activity-card">
-            <h3>ATIVIDADES PARA A PRIMEIRA INFÂNCIA</h3>
-            <p>6 brincadeiras simples e muito divertidas para crianças nos primeiros anos de vida.
-
-                São atividades de educação infantil para imaginar e criar, integrando recursos das artes plásticas, teatro, música e leitura, com materiais existentes em casa.</p>
-            <a href="../assets/livrosvida/Caderno-Arte-em-Casa.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-        <!-- Adicione mais fichas conforme necessário -->
+        <div id="livros-container">
     </main>
 
     <footer>
@@ -61,5 +44,47 @@
         </div>
         <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+    async function carregarLivrosVida() {
+      const container = document.getElementById("livros-container");
+      container.innerHTML = "<p>Carregando livros...</p>";
+
+      try {
+        const response = await fetch("http://localhost:8000/livrosvida/");
+        if (!response.ok) throw new Error("Erro ao buscar livros");
+
+        const livros = await response.json();
+
+        if (!livros.length) {
+          container.innerHTML = "<p>Nenhum livro disponível no momento.</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+
+        livros.forEach(livro => {
+          const card = document.createElement("div");
+          card.className = "activity-card";
+          const caminhoPdf = livro.caminhoPdf ? `http://localhost:8000/${livro.caminhoPdf}` : "#";
+
+          card.innerHTML = `
+            <h3>${livro.titulo}</h3>
+            <p>${livro.descricao}</p>
+            <a href="${caminhoPdf}" class="btn-download" download>Baixar PDF</a>
+          `;
+
+          container.appendChild(card);
+        });
+
+      } catch (error) {
+        container.innerHTML = "<p style='color:red;'>Erro ao carregar livros.</p>";
+        console.error(error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", carregarLivrosVida);
+  </script>
+
 </body>
 </html>

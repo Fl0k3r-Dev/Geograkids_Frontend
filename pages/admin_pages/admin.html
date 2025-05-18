@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - GeograKids</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .active-link { font-weight: bold; color: #0d6efd; }
+  </style>
+</head>
+<body>
+  <div class="d-flex">
+
+    <div class="sidebar bg-dark text-white p-4" style="width: 250px; min-height: 100vh;">
+      <h2 class="text-center">Administração</h2>
+      <ul class="nav flex-column" id="menu-list">
+        <!-- PRIMEIRO PASSO: CRIAR UM NOVO ITEM AQUI PARA O MENU
+             SEGUNDO PASSO: NOMEAR A VARIAVEL DO data-section  -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Referencias">Cadastro de Referências</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Livros">Cadastro de Livros</a></li> <!-- FALTA CADASTRAR PDF MESMO -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Fotos">Cadastro de Fotos</a></li> <!-- FALTA CADASTRAR FOTO MESMO -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Videos">Cadastro de Vídeos</a></li> <!-- FALTA CADASTRAR VÍDEO MESMO -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="LivrosVida">Cadastro de Livros da Vida</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="FichasAtividades">Cadastro de Fichas de Atividades</a></li> <!-- FALTA CADASTRAR PDF MESMO -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="FichasConteudos">Cadastro de Fichas de Conteudos</a></li> <!-- FALTA CADASTRAR PDF MESMO -->
+        <li class="nav-item"><a class="nav-link text-white" href="#" data-section="Cartografia"> Cadastro de Cartografias</a></li>
+        <button style="background-color: #f55; color: #fff;" onclick="logout()">Sair</button>
+      </ul>
+    </div>
+
+    <div class="main-content p-4" style="flex: 1;">
+      <h1 class="mb-4">Área de Administração</h1>
+      <div id="content-area"></div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Título do Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" id="modalSubmit">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    function logout() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "index.html";
+    }
+
+     async function verificarAcesso() {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const response = await fetch("http://127.0.0.1:8000/protegido", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        document.getElementById("mensagem").textContent = data.message;
+        document.body.style.display = "block"; // libera visualização
+      } else {
+        localStorage.removeItem("token");
+        window.location.href = "index.html";
+      }
+    }
+
+    verificarAcesso();
+    
+    // Função para normalizar o texto: tirar acentos e colocar em minúsculo
+    function normalizeText(text) {
+      return text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    }
+  
+    //TERCEIRO PASSO: 
+    // CHAVE = NOME DA VARIAVEL NO data-section
+    // VALOR = CAMPOS DA TABELA E DE CADASTRO DO MODAL
+    const fieldsBySection = {
+      Referencias: ["Titulo", "Autor", "Descrição", "Referência", "Link"],
+      Livros: ["Título", "Autor", "Descrição", "PDF"],
+      Fotos: ["Título", "Descrição", "Imagem"],
+      LivrosVida: ["Título", "Descrição", "PDF"],
+      Videos  : ["Título", "Descrição", "Vídeo"],
+      FichasAtividades: ["Título", "Descrição", "PDF"],
+      FichasConteudos: ["Título", "Descrição", "PDF"],
+      Cartografia: ["Título", "Descrição", "Link"], //O LINK NESSE CASO AQUI, É O IFRAME GERADO DO GOOGLE PARA INCORPORAR EM WEBSITES OS MAPAS
+    };
+  
+    async function fetchData(metodo, endpoint, payload, isJson = false) {
+  const url = `http://127.0.0.1:8000/${endpoint.toLowerCase().replace(/\/?$/, "/")}`;
+
+  const isFormData = payload instanceof FormData;
+
+  try {
+    const options = {
+      url,
+      type: metodo,
+      data: isJson ? JSON.stringify(payload) : payload,
+      processData: !isFormData, // se for FormData, não processa
+      contentType: isJson ? "application/json" : isFormData ? false : "application/x-www-form-urlencoded"
+    };
+
+    const response = await $.ajax(options);
+    console.log("Resposta da API:", response);
+    return response;
+  } catch (xhr) {
+    console.error("Erro na requisição:", xhr.statusText, xhr.responseText);
+    throw new Error(`Erro na requisição: ${xhr.statusText}`);
+  }
+}
+
+  
+    async function loadSection(section) {
+      $("#content-area").html("");
+  
+      if (section === "dashboard") {
+        const dashboardData = await fetchData("GET", "dashboard");
+        const colors = ["primary", "success", "danger", "warning"];
+        let content = `<h3>Dashboard</h3><div class="row">`;
+        let index = 0;
+        for (const key in dashboardData) {
+          content += `
+            <div class="col-md-3">
+              <div class="card bg-${colors[index % colors.length]} text-white mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">${key.replace('cadastro', 'Total de ')}</h5>
+                  <p class="card-text">${dashboardData[key]}</p>
+                </div>
+              </div>
+            </div>`;
+          index++;
+        }
+        content += `</div>`;
+        $("#content-area").html(content);
+        return;
+      }
+  
+      if (!(section in fieldsBySection)) {
+        $("#content-area").html("<h3>Seção não encontrada</h3>");
+        return;
+      }
+  
+      const fields = fieldsBySection[section];
+      let content = `<h3>${section.replace('cadastro', 'Cadastro de ')}</h3>`;
+      content += `<button type="button" class="btn btn-primary mb-3" onclick='openModal("${section}", ${JSON.stringify(fields)})'>Novo</button>`;
+      content += `<table class="table"><thead><tr><th>ID</th>`;
+      fields.forEach(field => content += `<th>${field}</th>`);
+      content += `<th>Ações</th></tr></thead><tbody id="${section}-table"></tbody></table>`;
+      $("#content-area").html(content);
+  
+      const data = await fetchData("GET", section);
+      if (!Array.isArray(data)) {
+        console.error("Erro: a API não retornou um array para", section, "Resposta:", data);
+        $(`#${section}-table`).html("<tr><td colspan='100%'>Erro ao carregar os dados</td></tr>");
+        return;
+      }
+  
+      let rows = data.map(row => {
+        let rowHTML = `<tr><td>${row.id}</td>`;
+        fields.forEach(field => {
+          let key = normalizeText(field);
+          rowHTML += `<td>${row[key] || ""}</td>`;
+        });
+        rowHTML += `<td>
+                      <button class="btn btn-warning me-2" onclick='openModal("${section}", ${JSON.stringify(fields)}, ${JSON.stringify(row)})'>Editar</button>
+                      <button class="btn btn-danger" onclick='deleteItem("${section}", ${row.id})'>Excluir</button>
+                    </td></tr>`;
+        return rowHTML;
+      }).join("");
+  
+      $(`#${section}-table`).html(rows);
+    }
+  
+    function openModal(section, fields, data = {}) {
+      if (typeof fields === "string") fields = JSON.parse(fields);
+      $("#modalLabel").text(section.replace('cadastro', 'Cadastro de '));
+      let modalContent = fields.map(field => {
+        const key = normalizeText(field);
+        if (key.toLowerCase() === "imagem" || key.toLowerCase() === "video" || key.toLowerCase() === "pdf") {
+          return `<div class="mb-3">
+            <label class="form-label">${field}</label>
+            <input type="file" class="form-control" id="${key}">
+            </div>`;
+        } else {
+          return `<div class="mb-3">
+            <label class="form-label">${field}</label>
+            <input type="text" class="form-control" id="${key}" value="${data[key] || ''}">
+            </div>`;
+        }
+      }).join("");
+      $("#modalBody").html(modalContent);
+      $("#modalSubmit").off('click').on('click', function() {
+        saveItem(section, data.id || null);
+      });
+      new bootstrap.Modal(document.getElementById("dynamicModal")).show();
+    }
+  
+    async function saveItem(section, id) {
+  const fields = fieldsBySection[section];
+  const data = {};
+  let hasFiles = false;
+  const formData = new FormData();
+
+  fields.forEach(field => {
+    const key = normalizeText(field);
+    const input = document.getElementById(key);
+
+    if (!input) {
+      console.warn(`Campo ${key} não encontrado!`);
+      return;
+    }
+
+    const value = input.value;
+    data[key] = value;
+    formData.append(key, value);
+  });
+
+  const fileInputs = ["pdf", "imagem", "video"];
+  fileInputs.forEach(fileType => {
+    const input = document.getElementById(fileType);
+
+    if (input && input.files.length > 0) {
+      const file = input.files[0];
+      hasFiles = true;
+
+      if (fileType === "pdf" && file.type === "application/pdf") {
+        formData.append("pdf", file);
+      } else if (fileType === "imagem" && file.type.startsWith("image/")) {
+        formData.append("imagem", file);
+      } else if (fileType === "video" && file.type.startsWith("video/")) {
+        formData.append("video", file);
+      } else {
+        console.warn(`Tipo de arquivo inválido para ${fileType}: ${file.type}`);
+      }
+    }
+  });
+
+  try {
+  let method = id ? "PUT" : "POST";
+  let url = id ? `${section}/${id}` : section;
+
+  if (id) formData.append("id", id);
+
+  await fetchData(method, url, formData);
+
+  loadSection(section);
+  bootstrap.Modal.getInstance(document.getElementById("dynamicModal")).hide();
+} catch (error) {
+  console.error("Erro ao salvar item:", error);
+  alert("Erro ao salvar. Veja o console.");
+}
+}
+
+
+    async function deleteItem(section, id) {
+      if (confirm("Tem certeza que deseja excluir?")) {
+        await fetchData("DELETE", `${section}/${id}`);
+        loadSection(section);
+      }
+    }
+  
+    $(document).ready(function() {
+      $(".nav-link").click(function () {
+        $(".nav-link").removeClass("active-link");
+        $(this).addClass("active-link");
+        $("#content-area").html("");
+        loadSection($(this).data("section"));
+      });
+      loadSection("dashboard");
+    });
+  </script>
+  
+</body>
+</html>

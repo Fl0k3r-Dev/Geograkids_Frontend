@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -28,24 +28,7 @@
     
     <main>
         <h2>Fichas de Atividades</h2>
-        <div class="activity-card">
-            <h3>Atividade sobre os Tipos de Moradia</h3>
-            <p>Descrever características observadas de seus lugares de vivência (moradia, escola etc.) e identificar semelhanças e diferenças entre esses lugares.
-               <br>Descrever e comparar diferentes tipos de moradia ou objetos de uso cotidiano (brinquedos, roupas, mobiliários), considerando técnicas e materiais utilizados em sua produção.</p>
-            <a href="../assets/fichasatividades/AS%20MORADIAS%20-%20TUDO%20SALA%20DE%20AULA.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-
-        <div class="activity-card">
-            <h3>Lugares de Vivências</h3>
-            <p>Reconhecer semelhanças e diferenças nos hábitos, nas relações com a natureza e no modo de viver de pessoas em diferentes lugares.</p>
-            <a href="../assets/fichasatividades/LUGARES%20DE%20CONVIV%C3%8ANCIA%20-%20TUDO%20SALA%20DE%20AULA.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-
-        <div class="activity-card">
-            <h3>Pontos de Referência</h3>
-            <p>Elaborar e utilizar mapas simples para localizar elementos do local de vivência, considerando referenciais espaciais (frente e atrás, esquerda e direita, em cima e embaixo, dentro e fora) e tendo o corpo como referência.</p>
-            <a href="../assets/fichasatividades/PONTOS%20DE%20REFER%C3%8ANCIAS%20-%20TUDO%20SALA%20DE%20AULA.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
+        <div id="activity-container"></div>
     </main>
 
     <footer>
@@ -61,5 +44,48 @@
         </div>
         <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8000/fichasatividades")
+        .then(response => response.json())
+        .then(data => renderActivities(data))
+        .catch(error => console.error("Erro ao carregar fichas:", error));
+});
+
+function renderActivities(activities) {
+    const container = document.getElementById("activity-container");
+
+    if (!activities || activities.length === 0) {
+        container.innerHTML = "<p>Nenhuma ficha disponível.</p>";
+        return;
+    }
+
+    activities.forEach(atividade => {
+        const card = document.createElement("div");
+        card.className = "activity-card";
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = atividade.titulo;
+
+        const descricao = document.createElement("p");
+        descricao.textContent = atividade.descricao;
+
+        const downloadBtn = document.createElement("a");
+        downloadBtn.className = "btn-download";
+        downloadBtn.href = `http://localhost:8000/${atividade.caminhoPdf}`;
+        downloadBtn.download = atividade.pdf;
+        downloadBtn.textContent = "Baixar PDF";
+
+        card.appendChild(titulo);
+        card.appendChild(descricao);
+        if (atividade.pdf) {
+            card.appendChild(downloadBtn);
+        }
+
+        container.appendChild(card);
+    });
+}
+    </script>
 </body>
 </html>

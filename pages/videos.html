@@ -8,6 +8,15 @@
     <script src="../scripts/scripts.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
     <link rel="stylesheet" href="../styles/styles.css">
+    <style>
+        .video-player video {
+        width: 200px;     /* largura da miniatura */
+        height: 120px;    /* altura proporcional, pode ajustar */
+        object-fit: cover; /* para cortar se necessário e não deformar */
+        border-radius: 8px; /* bordas arredondadas, opcional */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* sombra sutil, opcional */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,7 +29,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -29,40 +38,7 @@
     <main>
         <section class="videos-section">
             <h2>Vídeos</h2>
-
-            <div class="category">
-                <h3>Categoria 1</h3>
-                <div class="video-list">
-                    <div class="video-item">
-                        <h4>Apresentação</h4>
-                        <p>Vídeo com uma breve apresentação do sistema GeograKids</p>
-                        <div class="video-player">
-                            <video src="../assets/videos/Apresentacao_Sistema_Wiki.mp4" controls></video>
-                        </div>
-                    </div>
-                    <div class="video-item">
-                        <h4>Aula passeio</h4>
-                        <p>Explicação e exemplos do que é e como realizar uma aula passeio</p>
-                        <div class="video-player">
-                            <video src="../assets/videos/aula_passeio.mp4" controls></video>
-                        </div>
-                    </div>
-                    <div class="video-item">
-                        <h4>Dicas</h4>
-                        <p>10 Dicas para você desenvolver um Passeio Pedagógico com seus alunos!.</p>
-                        <div class="video-player">
-                            <video src="../assets/videos/10_dicas.mp4" controls></video>
-                        </div>
-                    </div>
-                    <div class="video-item">
-                        <h4>Problemas ambientais urbanos</h4>
-                        <p>Videoaula sobre problemas ambientais urbanos e compreenda quais são as principais questões ambientais que afligem as grandes cidades.</p>
-                        <div class="video-player">
-                            <video src="../assets/videos/Problemas_ambientais_urbanos.mp4" controls></video>
-                        </div>
-                    </div>                                        
-                </div>
-            </div>
+            <div id="videos-container"></div>
         </section>
     </main>
 
@@ -89,5 +65,43 @@
     </div>
     
     <script src="../scripts/scripts.js"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("videos-container");
+
+  try {
+    const response = await fetch("http://localhost:8000/videos"); // endpoint que retorna JSON com vídeos
+    const videos = await response.json();
+
+    // Se quiser, agrupar por categoria, ajuste aqui — por enquanto só lista simples
+    // Limpando o container para garantir que está vazio
+    container.innerHTML = "";
+
+    videos.forEach(video => {
+      const videoItem = document.createElement("div");
+      videoItem.className = "video-item";
+
+      // Monta a URL completa do vídeo (supondo que caminhoVideo é "videos/nome-arquivo.mp4")
+      const videoUrl = `http://localhost:8000/${video.caminhoVideo}`;
+
+      videoItem.innerHTML = `
+        <h4>${video.titulo}</h4>
+        <p>${video.descricao}</p>
+        <div class="video-player">
+          <video src="${videoUrl}" controls></video>
+        </div>
+      `;
+
+      container.appendChild(videoItem);
+    });
+
+  } catch (error) {
+    console.error("Erro ao carregar vídeos:", error);
+    container.innerHTML = "<p style='color:red;'>Erro ao carregar vídeos.</p>";
+  }
+});
+</script>
+
 </body>
 </html>

@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
         </div>
@@ -28,24 +28,7 @@
     
     <main>
         <h2>Fichas de Conteúdos</h2>
-        <div class="activity-card">
-            <h3>Ficha de Conteúdo 1</h3>
-            <p>Descrição da ficha de conteúdo 1. Essa ficha contém conteúdo sobre geografia básica, incluindo mapas e regiões.</p>
-            <a href="../assets/fichas/ficha1.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-
-        <div class="activity-card">
-            <h3>Ficha de Conteúdo 2</h3>
-            <p>Descrição da ficha de conteúdo 2. Nessa ficha de conteúdo, exploramos os climas do Brasil, suas características e distribuição.</p>
-            <a href="../assets/fichas/ficha2.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-
-        <div class="activity-card">
-            <h3>Ficha de Conteúdo 3</h3>
-            <p>Descrição da ficha de conteúdo 3. Essa ficha de conteúdo aborda a vegetação e biomas do território brasileiro.</p>
-            <a href="../assets/fichas/ficha3.pdf" class="btn-download" download>Baixar PDF</a>
-        </div>
-        <!-- Adicione mais fichas conforme necessário -->
+        <div id="activity-container"></div>
     </main>
 
     <footer>
@@ -61,5 +44,49 @@
         </div>
         <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
     </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8000/fichasconteudos")
+        .then(response => response.json())
+        .then(data => renderFichas(data))
+        .catch(error => console.error("Erro ao carregar fichas:", error));
+});
+
+function renderFichas(fichas) {
+    const container = document.getElementById("activity-container");
+
+    if (!fichas || fichas.length === 0) {
+        container.innerHTML = "<p>Nenhuma ficha disponível.</p>";
+        return;
+    }
+
+    fichas.forEach(ficha => {
+        const card = document.createElement("div");
+        card.className = "activity-card";
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = ficha.titulo;
+
+        const descricao = document.createElement("p");
+        descricao.textContent = ficha.descricao;
+
+        const downloadBtn = document.createElement("a");
+        downloadBtn.className = "btn-download";
+        downloadBtn.href = `http://localhost:8000/${ficha.caminhoPdf}`;
+        downloadBtn.download = ficha.pdf;
+        downloadBtn.textContent = "Baixar PDF";
+
+        card.appendChild(titulo);
+        card.appendChild(descricao);
+        if (ficha.pdf) {
+            card.appendChild(downloadBtn);
+        }
+
+        container.appendChild(card);
+    });
+}
+
+    </script>
 </body>
 </html>

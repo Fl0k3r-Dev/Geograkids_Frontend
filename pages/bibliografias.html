@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
             </div>
@@ -30,32 +30,7 @@
     <main>
         <h2>Referências Bibliográficas</h2>
 
-        <div class="reference-item">
-            <h3>Livro: "Geografia para Crianças"</h3>
-            <p><strong>Autor:</strong> João Silva</p>
-            <p><strong>Descrição:</strong> Um livro voltado para o ensino fundamental, abordando conceitos básicos de geografia de forma lúdica.</p>
-            <p><strong>Referência:</strong> Silva, J. href=(2021). Geografia para Crianças. Editora Educação.</p>
-        </div>
-
-        <div class="reference-item">
-            <h3>Artigo: "A importância da geografia na formação cidadã"</h3>
-            <p><strong>Autor:</strong> Maria Souza</p>
-            <p><strong>Descrição:</strong> Este artigo explora como o ensino de geografia pode contribuir para a formação de cidadãos conscientes.</p>
-            <p><strong>Referência:</strong> Souza, M. (2022). A importância da geografia na formação cidadã. Revista de Educação, 15(3), 45-58.</p>
-        </div>
-
-        <div class="reference-item">
-            <h3>Revista: "Geografia Hoje"</h3>
-            <p><strong>Descrição:</strong> Uma revista mensal que traz artigos, reportagens e entrevistas sobre os mais diversos temas geográficos.</p>
-            <p><strong>Referência:</strong> Geografia Hoje. (2023). Editora Conhecimento.</p>
-        </div>
-
-        <div class="reference-item">
-            <h3>Site: "Geografia na Web"</h3>
-            <p><strong>Descrição:</strong> Um site com diversos recursos didáticos, incluindo mapas interativos, vídeos e quiz sobre geografia.</p>
-            <p><strong>Link:</strong> <a href="https://www.geografianaweb.com.br" target="_blank">www.geografianaweb.com.br</a></p>
-        </div>
-        <!-- Adicione mais referências conforme necessário -->
+        <div id="referencias-container"></div>
     </main>
 
     <footer>
@@ -71,5 +46,36 @@
         </div>
         <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("referencias-container");
+
+    try {
+      const response = await fetch("http://localhost:8000/referencias");
+      const referencias = await response.json();
+
+      referencias.forEach(ref => {
+        const item = document.createElement("div");
+        item.className = "reference-item";
+
+        item.innerHTML = `
+          <h3>${ref.titulo}</h3>
+          ${ref.autor ? `<p><strong>Autor:</strong> ${ref.autor}</p>` : ""}
+          <p><strong>Descrição:</strong> ${ref.descricao}</p>
+          ${ref.link ? `<p><strong>Link:</strong> <a href="${ref.link}" target="_blank">${ref.link}</a></p>` : ""}
+          <p><strong>Referência:</strong> ${ref.referencia}</p>
+        `;
+
+        container.appendChild(item);
+      });
+
+    } catch (err) {
+      console.error("Erro ao buscar referências:", err);
+      container.innerHTML = "<p style='color:red;'>Erro ao carregar as referências.</p>";
+    }
+  });
+</script>
+
 </body>
 </html>

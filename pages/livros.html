@@ -20,7 +20,7 @@
             </a>
             <div class="user-info">                
                 <nav>                   
-                    <a href="#" class="btn">Login</a>
+                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
                 </nav>
             </div>
             </div>
@@ -31,21 +31,7 @@
         <section class="books-section">
             <h2>Lista de Livros</h2>
             <div class="book-list">
-                <div class="book-item">
-                    <h3>EDUCAÇÃO E NATUREZA</h3>
-                    <p>O Meu Ambiente, programa de educação ambiental do Ecofuturo, está lançando uma nova edição da publicação “Educação e Natureza” que visa valorizar a natureza como espaço educador. O e-book reúne depoimentos dos professores que participaram das formações do programa em 2023, sobre os projetos implementados em suas escolas, incluindo os desafios enfrentados, reflexões e impactos das iniciativas. Confira!</p>
-                    <a href="livros/Nosso-Ambiente.pdf" class="download-btn" download>Baixar PDF</a>
-                </div>
-                <div class="book-item">
-                    <h3>EDUCAÇÃO E NATUREZA: INSPIRAÇÕES E PRÁTICAS NA COMUNIDADE ESCOLAR</h3>
-                    <p>No e-book “Educação e Natureza – Espaços Verdes nas Escolas”, você pode conferir o resultado dos projetos desenvolvidos pelos professores que participaram das formações em 2022. O material reúne depoimentos dos educadores, que contam como foi a implementação, desafios, reflexões e impactos de suas iniciativas. .</p>
-                    <a href="livros/Educação-e-Natureza-2023.pdf" class="download-btn" download>Baixar PDF</a>
-                </div>
-                <div class="book-item">
-                    <h3>TECENDO SABERES SOCIOAMBIENTAIS</h3>
-                    <p>Com o objetivo de compartilhar experiências resultados e aprendizados, foram produzidas as publicações “Tecendo Saberes Socioambientais – dialogar, refletir e agir”, que registram as ações do programa Tecendo Saberes Socioambientais, promovidas com educadores e alunos da rede pública municipal, e as iniciativas desenvolvidas pelos participantes em cada uma das cidades.</p>
-                    <a href="livros/Tecendo-Saberes_Prado-2.pdf" class="download-btn" download>Baixar PDF</a>
-                </div>                
+                <div class="book-item"></div>            
             </div>
         </section>
     </main>
@@ -63,5 +49,36 @@
         </div>
         <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
     </footer>
+    <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.querySelector(".book-list");
+
+    try {
+      const response = await fetch("http://localhost:8000/livros");
+      const livros = await response.json();
+
+      container.innerHTML = "";
+
+      livros.forEach(livro => {
+        const item = document.createElement("div");
+        item.className = "book-item";
+        const caminhoPdf = livro.caminhoPdf ? `http://localhost:8000/${livro.caminhoPdf}` : "#";
+
+        item.innerHTML = `
+          <h3>${livro.titulo}</h3>
+          <p>${livro.descricao}</p>
+          <a href="${caminhoPdf}" class="download-btn" download>Baixar PDF</a>
+        `;
+
+        container.appendChild(item);
+      });
+
+    } catch (err) {
+      console.error("Erro ao buscar livros:", err);
+      container.innerHTML = "<p style='color:red;'>Erro ao carregar os livros.</p>";
+    }
+  });
+</script>
+
 </body>
 </html>
