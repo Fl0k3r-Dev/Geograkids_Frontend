@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeograKids</title>
+    <title>Geografando</title>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
     <script src="../scripts/scripts.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
@@ -15,7 +15,7 @@
             <a href="../index.html">
                 <div class="logo-container">
                     <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>GeograKids Wiki</h1>
+                    <h1>Geografando </h1>
                 </div>
             </a>
             <div class="user-info">                
@@ -47,14 +47,14 @@
             <a href="#"><img src="../assets/linkedin.png" alt="Linkedin"></a>
             <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
         </div>
-        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
     </footer>
     <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const container = document.querySelector(".book-list");
 
     try {
-      const response = await fetch("http://localhost:8000/livros");
+      const response = await fetch("http://localhost:8000/api/livros");
       const livros = await response.json();
 
       container.innerHTML = "";
@@ -62,7 +62,7 @@
       livros.forEach(livro => {
         const item = document.createElement("div");
         item.className = "book-item";
-        const caminhoPdf = livro.caminhoPdf ? `http://localhost:8000/${livro.caminhoPdf}` : "#";
+        const caminhoPdf = livro.caminhoPdf ? `http://localhost:8000/api/${livro.caminhoPdf}` : "#";
 
         item.innerHTML = `
           <h3>${livro.titulo}</h3>

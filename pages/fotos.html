@@ -1,93 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeograKids</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geografando</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png" />
     <script src="../scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="../styles/styles.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="../index.html">
-                <div class="logo-container">
-                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>GeograKids Wiki</h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
+      <div class="header-content">
+        <a href="../index.html">
+          <div class="logo-container">
+            <img
+              src="../assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="user-info">
+          <nav>
+            <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
+          </nav>
         </div>
+      </div>
     </header>
-    
+
     <main>
-        <h2>Álbuns de Fotos</h2>
-        <div class="album-grid">
-            <div class="album">
-            </div>
-        </div>
+      <h2>Álbuns de Fotos</h2>
+      <div class="album-grid">
+        <div class="album"></div>
+      </div>
     </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Contato</a>
-            <a href="#">Política de Privacidade</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="linkedin.png" alt="Linkedin"></a>
-            <a href="#"><img src="instagram.png" alt="Instagram"></a>
-        </div>
-        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+      <div class="footer-links">
+        <a href="#">Sobre Nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="linkedin.png" alt="Linkedin" /></a>
+        <a href="#"><img src="instagram.png" alt="Instagram" /></a>
+      </div>
+      <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
     </footer>
 
     <div id="album-modal" class="modal">
-        <span class="close">&times;</span>
-        <div class="modal-content">
-            <img id="album-photo" src="../assets/foto1.jpg" alt="Foto do Álbum">
-            <div class="photo-navigation">
-                <button id="prev-photo">&lt;</button>
-                <button id="next-photo">&gt;</button>
-            </div>
+      <span class="close">&times;</span>
+      <div class="modal-content">
+        <img id="album-photo" src="../assets/foto1.jpg" alt="Foto do Álbum" />
+        <div class="photo-navigation">
+          <button id="prev-photo">&lt;</button>
+          <button id="next-photo">&gt;</button>
         </div>
+      </div>
     </div>
 
     <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const container = document.querySelector(".album-grid");
+      document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.querySelector(".album-grid");
 
-    try {
-      const response = await fetch("http://localhost:8000/fotos");
-      const albuns = await response.json();
+        try {
+          const response = await fetch("http://localhost:8000/api/fotos");
+          const albuns = await response.json();
 
-      container.innerHTML = "";
+          container.innerHTML = "";
 
-      albuns.forEach(album => {
-        const item = document.createElement("div");
-        item.className = "album";
-        console.log(album);
-        item.innerHTML = `
-          <img src="http://localhost:8000/${album.caminhoImagem}" alt="${album.titulo}">
+          albuns.forEach((album) => {
+            const item = document.createElement("div");
+            item.className = "album";
+            console.log(album);
+            item.innerHTML = `
+          <img src="http://localhost:8000/api/${album.caminhoImagem}" alt="${album.titulo}">
           <p>${album.descricao}</p>
         `;
 
-        container.appendChild(item);
+            container.appendChild(item);
+          });
+        } catch (err) {
+          console.error("Erro ao buscar álbuns:", err);
+          container.innerHTML =
+            "<p style='color:red;'>Erro ao carregar os álbuns de fotos.</p>";
+        }
       });
-
-    } catch (err) {
-      console.error("Erro ao buscar álbuns:", err);
-      container.innerHTML = "<p style='color:red;'>Erro ao carregar os álbuns de fotos.</p>";
-    }
-  });
-</script>
-
-
-</body>
+    </script>
+  </body>
 </html>

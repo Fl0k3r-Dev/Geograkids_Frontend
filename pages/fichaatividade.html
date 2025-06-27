@@ -1,91 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeograKids</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geografando</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png" />
     <script src="../scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="../styles/styles.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="../index.html">
-                <div class="logo-container">
-                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>GeograKids Wiki</h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
+      <div class="header-content">
+        <a href="../index.html">
+          <div class="logo-container">
+            <img
+              src="../assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="user-info">
+          <nav>
+            <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
+          </nav>
         </div>
+      </div>
     </header>
-    
+
     <main>
-        <h2>Fichas de Atividades</h2>
-        <div id="activity-container"></div>
+      <h2>Fichas de Atividades</h2>
+      <div id="activity-container"></div>
     </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Contato</a>
-            <a href="#">Política de Privacidade</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="../assets/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="../assets/linkedin.png" alt="Linkedin"></a>
-            <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
-        </div>
-        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+      <div class="footer-links">
+        <a href="#">Sobre Nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="../assets/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="../assets/linkedin.png" alt="Linkedin" /></a>
+        <a href="#"><img src="../assets/instagram.png" alt="Instagram" /></a>
+      </div>
+      <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-    fetch("http://localhost:8000/fichasatividades")
-        .then(response => response.json())
-        .then(data => renderActivities(data))
-        .catch(error => console.error("Erro ao carregar fichas:", error));
-});
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("http://localhost:8000/api/fichasatividades")
+          .then((response) => response.json())
+          .then((data) => renderActivities(data))
+          .catch((error) => console.error("Erro ao carregar fichas:", error));
+      });
 
-function renderActivities(activities) {
-    const container = document.getElementById("activity-container");
+      function renderActivities(activities) {
+        const container = document.getElementById("activity-container");
 
-    if (!activities || activities.length === 0) {
-        container.innerHTML = "<p>Nenhuma ficha disponível.</p>";
-        return;
-    }
-
-    activities.forEach(atividade => {
-        const card = document.createElement("div");
-        card.className = "activity-card";
-
-        const titulo = document.createElement("h3");
-        titulo.textContent = atividade.titulo;
-
-        const descricao = document.createElement("p");
-        descricao.textContent = atividade.descricao;
-
-        const downloadBtn = document.createElement("a");
-        downloadBtn.className = "btn-download";
-        downloadBtn.href = `http://localhost:8000/${atividade.caminhoPdf}`;
-        downloadBtn.download = atividade.pdf;
-        downloadBtn.textContent = "Baixar PDF";
-
-        card.appendChild(titulo);
-        card.appendChild(descricao);
-        if (atividade.pdf) {
-            card.appendChild(downloadBtn);
+        if (!activities || activities.length === 0) {
+          container.innerHTML = "<p>Nenhuma ficha disponível.</p>";
+          return;
         }
 
-        container.appendChild(card);
-    });
-}
+        activities.forEach((atividade) => {
+          const card = document.createElement("div");
+          card.className = "activity-card";
+
+          const titulo = document.createElement("h3");
+          titulo.textContent = atividade.titulo;
+
+          const descricao = document.createElement("p");
+          descricao.textContent = atividade.descricao;
+
+          const downloadBtn = document.createElement("a");
+          downloadBtn.className = "btn-download";
+          downloadBtn.href = `http://localhost:8000/api/${atividade.caminhoPdf}`;
+          downloadBtn.download = atividade.pdf;
+          downloadBtn.textContent = "Baixar PDF";
+
+          card.appendChild(titulo);
+          card.appendChild(descricao);
+          if (atividade.pdf) {
+            card.appendChild(downloadBtn);
+          }
+
+          container.appendChild(card);
+        });
+      }
     </script>
-</body>
+  </body>
 </html>

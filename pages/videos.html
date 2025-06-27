@@ -1,91 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeograKids</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geografando</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png" />
     <script src="../scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="../styles/styles.css" />
     <style>
-        .video-player video {
-        width: 200px;     /* largura da miniatura */
-        height: 120px;    /* altura proporcional, pode ajustar */
+      .video-player video {
+        width: 200px; /* largura da miniatura */
+        height: 120px; /* altura proporcional, pode ajustar */
         object-fit: cover; /* para cortar se necessário e não deformar */
         border-radius: 8px; /* bordas arredondadas, opcional */
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* sombra sutil, opcional */
-        }
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* sombra sutil, opcional */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="../index.html">
-                <div class="logo-container">
-                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>GeograKids Wiki</h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
+      <div class="header-content">
+        <a href="../index.html">
+          <div class="logo-container">
+            <img
+              src="../assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="user-info">
+          <nav>
+            <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
+          </nav>
         </div>
+      </div>
     </header>
-    
+
     <main>
-        <section class="videos-section">
-            <h2>Vídeos</h2>
-            <div id="videos-container"></div>
-        </section>
+      <section class="videos-section">
+        <h2>Vídeos</h2>
+        <div id="videos-container"></div>
+      </section>
     </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Contato</a>
-            <a href="#">Política de Privacidade</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="../assets/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="../assets/linkedin.png" alt="Linkedin"></a>
-            <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
-        </div>
-        <p>&copy; 2024 GeograKids. Todos os direitos reservados.</p>
+      <div class="footer-links">
+        <a href="#">Sobre Nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="../assets/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="../assets/linkedin.png" alt="Linkedin" /></a>
+        <a href="#"><img src="../assets/instagram.png" alt="Instagram" /></a>
+      </div>
+      <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
     </footer>
 
     <!-- Modal para o player de vídeo expandido -->
     <div id="videoModal" class="modal">
-        <span class="close">&times;</span>
-        <div class="modal-content">
-            <video id="expandedVideo" controls></video>
-        </div>
+      <span class="close">&times;</span>
+      <div class="modal-content">
+        <video id="expandedVideo" controls></video>
+      </div>
     </div>
-    
+
     <script src="../scripts/scripts.js"></script>
 
     <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const container = document.getElementById("videos-container");
+      document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.getElementById("videos-container");
 
-  try {
-    const response = await fetch("http://localhost:8000/videos"); // endpoint que retorna JSON com vídeos
-    const videos = await response.json();
+        try {
+          const response = await fetch("http://localhost:8000/api/videos"); // endpoint que retorna JSON com vídeos
+          const videos = await response.json();
 
-    // Se quiser, agrupar por categoria, ajuste aqui — por enquanto só lista simples
-    // Limpando o container para garantir que está vazio
-    container.innerHTML = "";
+          // Se quiser, agrupar por categoria, ajuste aqui — por enquanto só lista simples
+          // Limpando o container para garantir que está vazio
+          container.innerHTML = "";
 
-    videos.forEach(video => {
-      const videoItem = document.createElement("div");
-      videoItem.className = "video-item";
+          videos.forEach((video) => {
+            const videoItem = document.createElement("div");
+            videoItem.className = "video-item";
 
-      // Monta a URL completa do vídeo (supondo que caminhoVideo é "videos/nome-arquivo.mp4")
-      const videoUrl = `http://localhost:8000/${video.caminhoVideo}`;
+            // Monta a URL completa do vídeo (supondo que caminhoVideo é "videos/nome-arquivo.mp4")
+            const videoUrl = `http://localhost:8000/api/${video.caminhoVideo}`;
 
-      videoItem.innerHTML = `
+            videoItem.innerHTML = `
         <h4>${video.titulo}</h4>
         <p>${video.descricao}</p>
         <div class="video-player">
@@ -93,15 +100,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
 
-      container.appendChild(videoItem);
-    });
-
-  } catch (error) {
-    console.error("Erro ao carregar vídeos:", error);
-    container.innerHTML = "<p style='color:red;'>Erro ao carregar vídeos.</p>";
-  }
-});
-</script>
-
-</body>
+            container.appendChild(videoItem);
+          });
+        } catch (error) {
+          console.error("Erro ao carregar vídeos:", error);
+          container.innerHTML =
+            "<p style='color:red;'>Erro ao carregar vídeos.</p>";
+        }
+      });
+    </script>
+  </body>
 </html>
