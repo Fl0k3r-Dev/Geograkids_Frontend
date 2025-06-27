@@ -54,7 +54,7 @@
     const container = document.querySelector(".book-list");
 
     try {
-      const response = await fetch("http://localhost:8000/api/livros");
+      const response = await fetch("/api/livros");
       const livros = await response.json();
 
       container.innerHTML = "";
@@ -62,7 +62,7 @@
       livros.forEach(livro => {
         const item = document.createElement("div");
         item.className = "book-item";
-        const caminhoPdf = livro.caminhoPdf ? `http://localhost:8000/api/${livro.caminhoPdf}` : "#";
+        const caminhoPdf = livro.caminhoPdf ? `/api/${livro.caminhoPdf}` : "#";
 
         item.innerHTML = `
           <h3>${livro.titulo}</h3>

@@ -78,9 +78,7 @@
 
       async function fetchCartografiaData() {
         try {
-          const response = await fetch(
-            "http://localhost:8000/api/cartografia/"
-          );
+          const response = await fetch("/api/cartografia/");
           const data = await response.json();
           renderCartografia(data);
         } catch (error) {

@@ -70,7 +70,7 @@
         const container = document.querySelector(".album-grid");
 
         try {
-          const response = await fetch("http://localhost:8000/api/fotos");
+          const response = await fetch("/api/fotos");
           const albuns = await response.json();
 
           container.innerHTML = "";
@@ -80,7 +80,7 @@
             item.className = "album";
             console.log(album);
             item.innerHTML = `
-          <img src="http://localhost:8000/api/${album.caminhoImagem}" alt="${album.titulo}">
+          <img src="/api/${album.caminhoImagem}" alt="${album.titulo}">
           <p>${album.descricao}</p>
         `;
 

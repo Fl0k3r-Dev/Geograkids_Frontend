@@ -78,7 +78,7 @@
         const container = document.getElementById("videos-container");
 
         try {
-          const response = await fetch("http://localhost:8000/api/videos"); // endpoint que retorna JSON com vídeos
+          const response = await fetch("/api/videos"); // endpoint que retorna JSON com vídeos
           const videos = await response.json();
 
           // Se quiser, agrupar por categoria, ajuste aqui — por enquanto só lista simples
@@ -90,7 +90,7 @@
             videoItem.className = "video-item";
 
             // Monta a URL completa do vídeo (supondo que caminhoVideo é "videos/nome-arquivo.mp4")
-            const videoUrl = `http://localhost:8000/api/${video.caminhoVideo}`;
+            const videoUrl = `/api/${video.caminhoVideo}`;
 
             videoItem.innerHTML = `
         <h4>${video.titulo}</h4>
