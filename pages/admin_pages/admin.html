@@ -148,7 +148,7 @@
           return;
         }
 
-        const response = await fetch("http://127.0.0.1:8000/api/protegido", {
+        const response = await fetch("/api/protegido", {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -189,9 +189,7 @@
       };
 
       async function fetchData(metodo, endpoint, payload, isJson = false) {
-        const url = `http://127.0.0.1:8000/api/${endpoint
-          .toLowerCase()
-          .replace(/\/?$/, "/")}`;
+        const url = `/api/${endpoint.toLowerCase().replace(/\/?$/, "/")}`;
 
         const isFormData = payload instanceof FormData;
 
