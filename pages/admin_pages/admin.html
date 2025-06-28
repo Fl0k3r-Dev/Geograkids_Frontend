@@ -381,7 +381,7 @@
 
         try {
           let method = id ? "PUT" : "POST";
-          let url = id ? `${section}/${id}` : section;
+          let url = id ? `${section.toLowerCase}/${id}` : section;
           if (id) {
             formData.append("id", id);
             data["id"] = id;
@@ -399,16 +399,12 @@
             headers["Content-Type"] = "application/json";
           }
 
-          const response = await fetch(url, {
+          await fetchData(
             method,
-            body: bodyToSend,
-            headers,
-          });
-
-          if (!response.ok) {
-            const err = await response.json();
-            throw new Error("Erro na requisição: " + JSON.stringify(err));
-          }
+            section,
+            hasFiles ? formData : data,
+            !hasFiles
+          );
 
           loadSection(section);
           bootstrap.Modal.getInstance(
