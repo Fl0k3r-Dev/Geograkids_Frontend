@@ -337,13 +337,13 @@
       async function saveItem(section, id) {
         const fields = fieldsBySection[section];
         const data = {};
-        let hasFiles = false;
         const formData = new FormData();
+        let hasFiles = false;
 
+        // Coleta os campos comuns
         fields.forEach((field) => {
           const key = normalizeText(field);
           const input = document.getElementById(key);
-
           if (!input) {
             console.warn(`Campo ${key} não encontrado!`);
             return;
@@ -354,10 +354,10 @@
           formData.append(key, value);
         });
 
+        // Verifica se há arquivos
         const fileInputs = ["pdf", "imagem", "video"];
         fileInputs.forEach((fileType) => {
           const input = document.getElementById(fileType);
-
           if (input && input.files.length > 0) {
             const file = input.files[0];
             hasFiles = true;
@@ -382,10 +382,33 @@
         try {
           let method = id ? "PUT" : "POST";
           let url = id ? `${section}/${id}` : section;
+          if (id) {
+            formData.append("id", id);
+            data["id"] = id;
+          }
 
-          if (id) formData.append("id", id);
+          // Decide o tipo de envio
+          let bodyToSend;
+          let headers = {};
 
-          await fetchData(method, url, formData);
+          if (hasFiles) {
+            bodyToSend = formData;
+            // `Content-Type` será definido automaticamente pelo navegador
+          } else {
+            bodyToSend = JSON.stringify(data);
+            headers["Content-Type"] = "application/json";
+          }
+
+          const response = await fetch(url, {
+            method,
+            body: bodyToSend,
+            headers,
+          });
+
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error("Erro na requisição: " + JSON.stringify(err));
+          }
 
           loadSection(section);
           bootstrap.Modal.getInstance(
