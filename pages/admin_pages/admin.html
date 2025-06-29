@@ -189,33 +189,49 @@
       };
 
       async function fetchData(metodo, endpoint, payload, isJson = false) {
-        const url = `/api/${endpoint.toLowerCase().replace(/\/?$/, "/")}`;
+        const url = `/api/${endpoint.toLowerCase().replace(/\/$/, "")}`;
 
         const isFormData = payload instanceof FormData;
 
         try {
-          const options = {
-            url,
-            type: metodo,
-            data: isJson ? JSON.stringify(payload) : payload,
-            processData: !isFormData, // se for FormData, não processa
-            contentType: isJson
-              ? "application/json"
-              : isFormData
-              ? false
-              : "application/x-www-form-urlencoded",
-          };
+          if (isFormData) {
+            // Usa fetch nativo para FormData
+            const response = await fetch(url, {
+              method: metodo,
+              body: payload,
+            });
 
-          const response = await $.ajax(options);
-          console.log("Resposta da API:", response);
-          return response;
-        } catch (xhr) {
-          console.error(
-            "Erro na requisição:",
-            xhr.statusText,
-            xhr.responseText
-          );
-          throw new Error(`Erro na requisição: ${xhr.statusText}`);
+            if (!response.ok) {
+              const err = await response.text();
+              throw new Error(
+                `Erro na requisição: ${response.status} - ${err}`
+              );
+            }
+
+            const result = await response.json();
+            console.log("Resposta da API:", result);
+            return result;
+          } else {
+            // Usa jQuery para JSON
+            const options = {
+              url,
+              type: metodo,
+              data: isJson ? JSON.stringify(payload) : payload,
+              processData: !isFormData,
+              contentType: isJson
+                ? "application/json"
+                : isFormData
+                ? false
+                : "application/x-www-form-urlencoded",
+            };
+
+            const response = await $.ajax(options);
+            console.log("Resposta da API:", response);
+            return response;
+          }
+        } catch (error) {
+          console.error("Erro na requisição:", error);
+          throw error;
         }
       }
 
