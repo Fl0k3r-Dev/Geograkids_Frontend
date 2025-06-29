@@ -383,7 +383,6 @@
           let method = id ? "PUT" : "POST";
           let url = id ? `${section}/${id}` : section;
 
-          console.log("URL AQUI: ", url);
           if (id) {
             formData.append("id", id);
             data["id"] = id;
@@ -401,12 +400,7 @@
             headers["Content-Type"] = "application/json";
           }
 
-          await fetchData(
-            method,
-            section,
-            hasFiles ? formData : data,
-            !hasFiles
-          );
+          await fetchData(method, url, hasFiles ? formData : data, !hasFiles);
 
           loadSection(section);
           bootstrap.Modal.getInstance(
