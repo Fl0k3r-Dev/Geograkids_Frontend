@@ -381,7 +381,7 @@
 
         try {
           let method = id ? "PUT" : "POST";
-          let url = id ? `${section.toLowerCase}/${id}` : section;
+          let url = id ? `${section}/${id}` : section;
           if (id) {
             formData.append("id", id);
             data["id"] = id;
