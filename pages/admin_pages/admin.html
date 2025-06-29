@@ -382,6 +382,8 @@
         try {
           let method = id ? "PUT" : "POST";
           let url = id ? `${section}/${id}` : section;
+
+          console.log("ID AQUI: ", id);
           if (id) {
             formData.append("id", id);
             data["id"] = id;
