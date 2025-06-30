@@ -54,7 +54,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        fetch("/api/fichasconteudos")
+        fetch("http://127.0.0.1:8000/fichasconteudos")
           .then((response) => response.json())
           .then((data) => renderFichas(data))
           .catch((error) => console.error("Erro ao carregar fichas:", error));
@@ -80,7 +80,7 @@
 
           const downloadBtn = document.createElement("a");
           downloadBtn.className = "btn-download";
-          downloadBtn.href = `/api/${ficha.caminhoPdf}`;
+          downloadBtn.href = `http://127.0.0.1:8000/${ficha.caminhoPdf}`;
           downloadBtn.download = ficha.pdf;
           downloadBtn.textContent = "Baixar PDF";
 

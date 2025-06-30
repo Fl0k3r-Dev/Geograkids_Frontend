@@ -78,7 +78,7 @@
 
       async function fetchCartografiaData() {
         try {
-          const response = await fetch("/api/cartografia/");
+          const response = await fetch("http://127.0.0.1:8000/cartografia/");
           const data = await response.json();
           renderCartografia(data);
         } catch (error) {

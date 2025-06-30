@@ -52,7 +52,7 @@
     const container = document.getElementById("referencias-container");
 
     try {
-      const response = await fetch("/api/referencias");
+      const response = await fetch("http://127.0.0.1:8000/referencias");
       const referencias = await response.json();
 
       referencias.forEach(ref => {
