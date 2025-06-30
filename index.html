@@ -1,101 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geografando</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
-    <script src="scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="index.html">
-                <div class="logo-container">
-                    <img src="assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>Geografando </h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="pages/admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
-            <div class="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="header-content">
+        <a href="index.html">
+          <div class="logo-container">
+            <img
+              src="assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="search-wrapper">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-end-0">
+              <i class="fas fa-search text-white"></i>
+            </span>
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control bg-transparent border-start-0 ps-0 text-white"
+              placeholder="Pesquisar conteúdo..."
+              aria-label="Pesquisar conteúdo"
+            />
+            <span
+              class="input-group-text bg-transparent border-start-0 d-none"
+              id="clearSearch"
+            >
+              <i class="fas fa-times text-white" style="cursor: pointer"></i>
+            </span>
+          </div>
+          <div id="searchFeedback" class="mt-2 text-center d-none">
+            <small class="text-white">Nenhum resultado encontrado</small>
+          </div>
         </div>
-        <div class="overlay-menu">
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Bibliografia</a>
-                <a href="#">Fichas de Texto</a>
-                <a href="#">Fichas de Atividades</a>
-                <a href="#">Livro da Vida</a>
-                <a href="#">Vídeos</a>
-                <a href="#">A Cidade</a>
-                <a href="#">Logout</a>
-            </nav>
+        <div class="user-info">
+          <nav>
+            <a href="pages/admin_pages/index.html" class="btn"
+              >Área Administrativa</a
+            >
+          </nav>
         </div>
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="overlay-menu">
+        <nav>
+          <a href="#">Home</a>
+          <a href="#">Bibliografia</a>
+          <a href="#">Fichas de Texto</a>
+          <a href="#">Fichas de Atividades</a>
+          <a href="#">Livro da Vida</a>
+          <a href="#">Vídeos</a>
+          <a href="#">A Cidade</a>
+          <a href="#">Logout</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <div class="icon-grid">
-            <div class="icon">
-                <a href="pages/bibliografias.html"><img src="assets/biblio.png" alt="Bibliografia">
-                <p>Referências Bibliográficas</p></a>
-            </div>
-            <div class="icon">
-                <a href="pages/livros.html"><img src="assets/livro.png" alt="Bibliografia">
-                <p>Livros</p></a>
-            </div>
-            <div class="icon">
-                <a href="pages/fotos.html"><img src="assets/fotos.png" alt="Fichas de conteúdos">
-                <p>Fotos</p></a>
-            </div>
-            <div class="icon">
-                <a href="pages/videos.html"><img src="assets/videos.png" alt="Vídeos">
-                <p>Vídeos</p></a>
-            </div>
-            <div class="icon">
-                <a href="pages/livrosvida.html"><img src="assets/livrovida.png" alt="Livros da vida">
-                <p>Livros da Vida</p></a>
-            </div>  
-            <div class="icon">
-                <a href="pages/fichaatividade.html"><img src="assets/fichaatividades.png" alt="Fichas de atividades">
-                <p>Fichas de atividades</p></a>
-            </div>           
-            <div class="icon">
-                <a href="pages/fichaconteudo.html"><img src="assets/fichatexto.png" alt="Fichas de conteúdos">
-                <p>Fichas de conteúdos</p></a>
-            </div>                   
-            <div class="icon">
-                <a href="pages/cidade.html"><img src="assets/cartografia.png" alt="A cidade">
-                <p>Cartografia</p></a>
-            </div>
-            <div class="icon highlight">
-                <a href="pages/categoriasGeo.html"><img src="assets/geografia.png" alt="Categorias da Geografia">
-                <p>Categorias da Geografia</p></a>
-            </div>
+      <div class="icon-grid">
+        <div class="icon">
+          <a href="pages/bibliografias.html"
+            ><img src="assets/biblio.png" alt="Bibliografia" />
+            <p>Referências Bibliográficas</p></a
+          >
         </div>
+        <div class="icon">
+          <a href="pages/livros.html"
+            ><img src="assets/livro.png" alt="Bibliografia" />
+            <p>Livros</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/fotos.html"
+            ><img src="assets/fotos.png" alt="Fichas de conteúdos" />
+            <p>Fotos</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/videos.html"
+            ><img src="assets/videos.png" alt="Vídeos" />
+            <p>Vídeos</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/livrosvida.html"
+            ><img src="assets/livrovida.png" alt="Livros da vida" />
+            <p>Livros da Vida</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/fichaatividade.html"
+            ><img src="assets/fichaatividades.png" alt="Fichas de atividades" />
+            <p>Fichas de atividades</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/fichaconteudo.html"
+            ><img src="assets/fichatexto.png" alt="Fichas de conteúdos" />
+            <p>Fichas de conteúdos</p></a
+          >
+        </div>
+        <div class="icon">
+          <a href="pages/cidade.html"
+            ><img src="assets/cartografia.png" alt="A cidade" />
+            <p>Cartografia</p></a
+          >
+        </div>
+        <div class="icon highlight">
+          <a href="pages/categoriasGeo.html"
+            ><img src="assets/geografia.png" alt="Categorias da Geografia" />
+            <p>Categorias da Geografia</p></a
+          >
+        </div>
+        <!-- Cards de subcategorias (inicialmente ocultos) -->
+        <div class="icon subcategory" style="display: none">
+          <a href="pages/categoriasGeoLugar.html"
+            ><img src="assets/lugar.png" alt="Lugar" />
+            <p>Lugar</p></a
+          >
+        </div>
+        <div class="icon subcategory" style="display: none">
+          <a href="pages/categoriasGeoPaisagem.html"
+            ><img src="assets/paisagem.png" alt="Paisagem" />
+            <p>Paisagem</p></a
+          >
+        </div>
+        <div class="icon subcategory" style="display: none">
+          <a href="pages/categoriasGeoTerritorio.html"
+            ><img src="assets/territorio.png" alt="Território" />
+            <p>Território</p></a
+          >
+        </div>
+        <div class="icon subcategory" style="display: none">
+          <a href="pages/categoriasGeoRegiao.html"
+            ><img src="assets/regiao.png" alt="Região" />
+            <p>Região</p></a
+          >
+        </div>
+      </div>
     </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Contato</a>
-            <a href="#">Política de Privacidade</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="assets/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="assets/linkedin.png" alt="Linkedin"></a>
-            <a href="#"><img src="assets/instagram.png" alt="Instagram"></a>
-        </div>
-        <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
-    </footer>    
-</body>
+      <div class="footer-links">
+        <a href="#">Sobre Nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="assets/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="assets/linkedin.png" alt="Linkedin" /></a>
+        <a href="#"><img src="assets/instagram.png" alt="Instagram" /></a>
+      </div>
+      <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Search functionality -->
+    <script src="scripts/search.js"></script>
+    <!-- Other scripts -->
+    <script src="scripts/scripts.js"></script>
+  </body>
 </html>

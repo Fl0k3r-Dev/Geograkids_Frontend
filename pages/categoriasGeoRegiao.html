@@ -1,198 +1,264 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geografando</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
-    <script src="../scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="../styles/styles.css">
-</head>
-<body>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="../index.html">
-                <div class="logo-container">
-                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>Geografando </h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
-            <div class="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="header-content">
+        <a href="../index.html">
+          <div class="logo-container">
+            <img
+              src="../assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="search-wrapper">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-end-0">
+              <i class="fas fa-search text-white"></i>
+            </span>
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control bg-transparent border-start-0 ps-0 text-white"
+              placeholder="Pesquisar conteúdo..."
+              aria-label="Pesquisar conteúdo"
+            />
+            <span
+              class="input-group-text bg-transparent border-start-0 d-none"
+              id="clearSearch"
+            >
+              <i class="fas fa-times text-white" style="cursor: pointer"></i>
+            </span>
+          </div>
+          <div id="searchFeedback" class="mt-2 text-center d-none">
+            <small class="text-white">Nenhum resultado encontrado</small>
+          </div>
         </div>
-        <div class="overlay-menu">
-            <nav>
-                <a href="#">Home</a>
-                <a href="categoriasGeo.html">Categorias</a>
-                <a href="#">Logout</a>
-            </nav>
+        <div class="user-info">
+          <nav>
+            <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
+          </nav>
         </div>
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="overlay-menu">
+        <nav>
+          <a href="#">Home</a>
+          <a href="categoriasGeo.html">Categorias</a>
+          <a href="#">Logout</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <a href="categoriasGeo.html" class="back-link">← Voltar para Categorias</a>
-        <h1>Região 1</h1>
-        <h2>Descrição do Região 1 com os materiais disponíveis:</h2>
-        <div class="tab-container">
-            <button class="tab-link active" onclick="openTab(event, 'Textos1')">Textos</button>
-            <button class="tab-link" onclick="openTab(event, 'PDFs1')">PDFs</button>
-            <button class="tab-link" onclick="openTab(event, 'Slides1')">Apresentações de Slides</button>
-            <button class="tab-link" onclick="openTab(event, 'Videos1')">Vídeos</button>
-            <button class="tab-link" onclick="openTab(event, 'Fotos1')">Fotos</button>
-        </div>
-
-        <section id="Textos1" class="tab-content active">
-            <h3>Textos</h3>
-            <article>
-                <p>Aqui você encontra textos explicativos sobre o conceito de Região na geografia...</p>
-                <a href="../regiao/revista_historia_regional56.pdf" class="download-link">SOBRE O CONCEITO DE REGIÃO</a>
-            </article>
-        </section>
-
-        <section id="PDFs1" class="tab-content">
-            <h3>PDFs</h3>
-            <ul>
-                <li><a href="../regiao/geo75478951900.pdf" class="download-link">A CONSTRUÇÃO DO CONCEITO DE REGIÃO NO ENSINO DE GEOGRAFIA</a></li>               
-            </ul>
-        </section>
-
-        <section id="Slides1" class="tab-content">
-            <h3>Apresentações de Slides</h3>
-            <ul>
-                <li><a href="../regiao/Português-PDF.pdf" class="download-link">O conceito de regiãona geografia escolar</a></li>                
-            </ul>
-        </section>
-
-        <section id="Videos1" class="tab-content">
-            <h3>Vídeos</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/XZahxV52OYg?si=bkZxaKzlprQNKEZX" frameborder="0" allowfullscreen></iframe>
-                <p>Descrição do vídeo sobre Região.</p>
-            </div>
-        </section>
-
-        <section id="Fotos1" class="tab-content">
-            <h3>Fotos</h3>
-            <div class="photo-gallery">
-                <img src="../regiao/200807-mapa-regiões-do-Brasil.jpg" alt="Foto relacionada a Região 1">
-                <img src="../regiao/geo01-01und01-lugares-onde-vivemos.jpg" alt="Foto relacionada a Região 1">
-                <img src="../regiao/maxresdefault.jpg" alt="Foto relacionada a Região 1">
-            </div>
-        </section>
-
-        <!-- Região 2 -->
-        <h1>Região 2</h1>
-        <h2>Descrição do Região 2 com os materiais disponíveis:</h2>
-        <div class="tab-container">
-            <button class="tab-link active" onclick="openTab(event, 'Textos2')">Textos</button>
-            <button class="tab-link" onclick="openTab(event, 'PDFs2')">PDFs</button>
-            <button class="tab-link" onclick="openTab(event, 'Slides2')">Apresentações de Slides</button>
-            <button class="tab-link" onclick="openTab(event, 'Videos2')">Vídeos</button>
-            <button class="tab-link" onclick="openTab(event, 'Fotos2')">Fotos</button>
-        </div>
-
-        <section id="Textos2" class="tab-content active">
-            <h3>Textos</h3>
-            <article>
-                <p>Aqui você encontra textos explicativos sobre o conceito de Região na geografia...</p>
-                <a href="../texto_Região2.pdf" class="download-link">Baixar Texto PDF</a>
-            </article>
-        </section>
-
-        <section id="PDFs2" class="tab-content">
-            <h3>PDFs</h3>
-            <ul>
-                <li><a href="../material_Região_2_1.pdf" class="download-link">Material Didático - Região 1</a></li>
-                <li><a href="../material_Região_2_2.pdf" class="download-link">Material Didático - Região 2</a></li>
-            </ul>
-        </section>
-
-        <section id="Slides2" class="tab-content">
-            <h3>Apresentações de Slides</h3>
-            <ul>
-                <li><a href="../slides_Região_2_1.pptx" class="download-link">Apresentação 1</a></li>
-                <li><a href="../slides_Região_2_2.pptx" class="download-link">Apresentação 2</a></li>
-            </ul>
-        </section>
-
-        <section id="Videos2" class="tab-content">
-            <h3>Vídeos</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO2" frameborder="0" allowfullscreen></iframe>
-                <p>Descrição do vídeo sobre Região.</p>
-            </div>
-        </section>
-
-        <section id="Fotos2" class="tab-content">
-            <h3>Fotos</h3>
-            <div class="photo-gallery">
-                <img src="../foto2_1.jpg" alt="Foto relacionada a Região 2">
-                <img src="../foto2_2.jpg" alt="Foto relacionada a Região 2">
-                <img src="../foto2_3.jpg" alt="Foto relacionada a Região 2">
-            </div>
-        </section>
-
-        <!-- Região 3 -->
-        <h1>Região 3</h1>
-        <h2>Descrição do Região 3 com os materiais disponíveis:</h2>
-        <div class="tab-container">
-            <button class="tab-link active" onclick="openTab(event, 'Textos3')">Textos</button>
-            <button class="tab-link" onclick="openTab(event, 'PDFs3')">PDFs</button>
-            <button class="tab-link" onclick="openTab(event, 'Slides3')">Apresentações de Slides</button>
-            <button class="tab-link" onclick="openTab(event, 'Videos3')">Vídeos</button>
-            <button class="tab-link" onclick="openTab(event, 'Fotos3')">Fotos</button>
-        </div>
-
-        <section id="Textos3" class="tab-content active">
-            <h3>Textos</h3>
-            <article>
-                <p>Aqui você encontra textos explicativos sobre o conceito de Região na geografia...</p>
-                <a href="../texto_Região3.pdf" class="download-link">Baixar Texto PDF</a>
-            </article>
-        </section>
-
-        <section id="PDFs3" class="tab-content">
-            <h3>PDFs</h3>
-            <ul>
-                <li><a href="../material_Região_3_1.pdf" class="download-link">Material Didático - Região 1</a></li>
-                <li><a href="../material_Região_3_2.pdf" class="download-link">Material Didático - Região 2</a></li>
-            </ul>
-        </section>
-
-        <section id="Slides3" class="tab-content">
-            <h3>Apresentações de Slides</h3>
-            <ul>
-                <li><a href="../slides_Região_3_1.pptx" class="download-link">Apresentação 1</a></li>
-                <li><a href="../slides_Região_3_2.pptx" class="download-link">Apresentação 2</a></li>
-            </ul>
-        </section>
-
-        <section id="Videos3" class="tab-content">
-            <h3>Vídeos</h3>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/ID_DO_VIDEO3" frameborder="0" allowfullscreen></iframe>
-                <p>Descrição do vídeo sobre Região.</p>
-            </div>
-        </section>
-
-        <section id="Fotos3" class="tab-content">
-            <h3>Fotos</h3>
-            <div class="photo-gallery">
-                <img src="../foto3_1.jpg" alt="Foto relacionada a Região 3">
-                <img src="../foto3_2.jpg" alt="Foto relacionada a Região 3">
-                <img src="../foto3_3.jpg" alt="Foto relacionada a Região 3">
-            </div>
-        </section>
+      <a href="categoriasGeo.html" class="back-link"
+        >← Voltar para Categorias</a
+      >
+      <div id="regioes-container">
+        <!-- O conteúdo será carregado dinamicamente aqui -->
+      </div>
     </main>
+
+    <footer>
+      <div class="footer-content">
+        <p>Geografando - Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Search functionality -->
+    <script src="../scripts/search.js"></script>
+    <!-- Other scripts -->
     <script src="../scripts/scripts.js"></script>
-</body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadRegioes();
+      });
+
+      async function loadRegioes() {
+        try {
+          const response = await fetch("http://127.0.0.1:8000/categorias");
+          const categorias = await response.json();
+
+          // Filtrar apenas as categorias do tipo REGIAO
+          const regioes = categorias.filter((cat) => cat.tipo === "REGIAO");
+
+          const container = document.getElementById("regioes-container");
+
+          for (const regiao of regioes) {
+            // Buscar detalhes específicos da categoria
+            const detalhesResponse = await fetch(
+              `http://127.0.0.1:8000/categorias/${regiao.id}`
+            );
+            const detalhes = await detalhesResponse.json();
+
+            const section = document.createElement("div");
+            section.className = "categoria-section";
+
+            section.innerHTML = `
+              <h1>${detalhes.titulo}</h1>
+              <h2>${detalhes.descricao}</h2>
+              
+              <div class="tab-container">
+                ${
+                  detalhes.texto
+                    ? '<button class="tab-link active" onclick="openTab(event, `Textos${regiao.id}`)">Textos</button>'
+                    : ""
+                }
+                ${
+                  detalhes.pdf_url
+                    ? '<button class="tab-link" onclick="openTab(event, `PDFs${regiao.id}`)">PDFs</button>'
+                    : ""
+                }
+                ${
+                  detalhes.slides_url
+                    ? '<button class="tab-link" onclick="openTab(event, `Slides${regiao.id}`)">Apresentações de Slides</button>'
+                    : ""
+                }
+                ${
+                  detalhes.video_url
+                    ? '<button class="tab-link" onclick="openTab(event, `Videos${regiao.id}`)">Vídeos</button>'
+                    : ""
+                }
+                ${
+                  detalhes.foto_url
+                    ? '<button class="tab-link" onclick="openTab(event, `Fotos${regiao.id}`)">Fotos</button>'
+                    : ""
+                }
+              </div>
+
+              ${
+                detalhes.texto
+                  ? `
+                <section id="Textos${regiao.id}" class="tab-content active">
+                  <h3>Textos</h3>
+                  <article>
+                    ${detalhes.texto}
+                  </article>
+                </section>
+              `
+                  : ""
+              }
+
+              ${
+                detalhes.pdf_url
+                  ? `
+                <section id="PDFs${regiao.id}" class="tab-content">
+                  <h3>PDFs</h3>
+                  <ul>
+                    <li>
+                      <a href="http://127.0.0.1:8000${detalhes.pdf_url}" class="download-link" target="_blank">
+                        Visualizar PDF
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              `
+                  : ""
+              }
+
+              ${
+                detalhes.slides_url
+                  ? `
+                <section id="Slides${regiao.id}" class="tab-content">
+                  <h3>Apresentações de Slides</h3>
+                  <ul>
+                    <li>
+                      <a href="http://127.0.0.1:8000${detalhes.slides_url}" class="download-link" target="_blank">
+                        Baixar Apresentação
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              `
+                  : ""
+              }
+
+              ${
+                detalhes.video_url
+                  ? `
+                <section id="Videos${regiao.id}" class="tab-content">
+                  <h3>Vídeos</h3>
+                  <div class="video-container">
+                    <video controls>
+                      <source src="http://127.0.0.1:8000${detalhes.video_url}" type="video/mp4">
+                      Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                  </div>
+                </section>
+              `
+                  : ""
+              }
+
+              ${
+                detalhes.foto_url
+                  ? `
+                <section id="Fotos${regiao.id}" class="tab-content">
+                  <h3>Fotos</h3>
+                  <div class="photo-gallery">
+                    <img src="http://127.0.0.1:8000${detalhes.foto_url}" alt="Foto relacionada a ${detalhes.titulo}" />
+                  </div>
+                </section>
+              `
+                  : ""
+              }
+            `;
+
+            container.appendChild(section);
+          }
+        } catch (error) {
+          console.error("Erro ao carregar regiões:", error);
+        }
+      }
+
+      function openTab(event, tabId) {
+        const tabContents = event.target
+          .closest(".categoria-section")
+          .getElementsByClassName("tab-content");
+        const tabLinks = event.target
+          .closest(".categoria-section")
+          .getElementsByClassName("tab-link");
+
+        for (let content of tabContents) {
+          content.classList.remove("active");
+        }
+
+        for (let link of tabLinks) {
+          link.classList.remove("active");
+        }
+
+        document.getElementById(tabId).classList.add("active");
+        event.target.classList.add("active");
+      }
+    </script>
+  </body>
 </html>

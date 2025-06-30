@@ -1,81 +1,227 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geografando</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png">
-    <script src="../scripts/scripts.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap">
-    <link rel="stylesheet" href="../styles/styles.css">
-</head>
-<body>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    />
+    <link rel="stylesheet" href="../styles/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <a href="../index.html">
-                <div class="logo-container">
-                    <img src="../assets/logo.png" alt="Imagem ao lado do logo" class="logo-image">
-                    <h1>Geografando </h1>
-                </div>
-            </a>
-            <div class="user-info">                
-                <nav>                   
-                    <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
-                </nav>
-            </div>
-            <div class="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="header-content">
+        <a href="../index.html">
+          <div class="logo-container">
+            <img
+              src="../assets/logo.png"
+              alt="Imagem ao lado do logo"
+              class="logo-image"
+            />
+            <h1>Geografando</h1>
+          </div>
+        </a>
+        <div class="search-wrapper">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-end-0">
+              <i class="fas fa-search text-white"></i>
+            </span>
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control bg-transparent border-start-0 ps-0 text-white"
+              placeholder="Pesquisar conteúdo..."
+              aria-label="Pesquisar conteúdo"
+            />
+            <span
+              class="input-group-text bg-transparent border-start-0 d-none"
+              id="clearSearch"
+            >
+              <i class="fas fa-times text-white" style="cursor: pointer"></i>
+            </span>
+          </div>
+          <div id="searchFeedback" class="mt-2 text-center d-none">
+            <small class="text-white">Nenhum resultado encontrado</small>
+          </div>
         </div>
-        <div class="overlay-menu">
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">Bibliografia</a>
-                <a href="#">Fichas de Texto</a>
-                <a href="#">Fichas de Atividades</a>
-                <a href="#">Livro da Vida</a>
-                <a href="#">Vídeos</a>
-                <a href="#">A Cidade</a>
-                <a href="#">Logout</a>
-            </nav>
+        <div class="user-info">
+          <nav>
+            <a href="admin_pages/index.html" class="btn">Área Administrativa</a>
+          </nav>
         </div>
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="overlay-menu">
+        <nav>
+          <a href="#">Home</a>
+          <a href="#">Bibliografia</a>
+          <a href="#">Fichas de Texto</a>
+          <a href="#">Fichas de Atividades</a>
+          <a href="#">Livro da Vida</a>
+          <a href="#">Vídeos</a>
+          <a href="#">A Cidade</a>
+          <a href="#">Logout</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <div class="icon-grid">
-            <div class="icon">
-                <a href="../pages/categoriasGeoLugar.html"><img src="../assets/lugar.png" alt="Lugar">
-                <p>Lugar</p></a>
-            </div>
-            <div class="icon">
-                <a href="../pages/categoriasGeoPaisagem.html"><img src="../assets/paisagem.png" alt="Paisagem">
-                <p>Paisagem</p></a>
-            </div>
-            <div class="icon">
-                <a href="../pages/categoriasGeoTerritorio.html"><img src="../assets/territorio.png" alt="Território">
-                <p>Território</p></a>
-            </div>
-            <div class="icon">
-                <a href="../pages/categoriasGeoRegiao.html"><img src="../assets/regiao.png" alt="Região">
-                <p>Região</p></a>
-            </div>           
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-center mb-4">Categorias Geográficas</h2>
+          </div>
         </div>
+        <div class="row" id="categorias-container">
+          <!-- O conteúdo será carregado dinamicamente aqui -->
+        </div>
+      </div>
     </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Contato</a>
-            <a href="#">Política de Privacidade</a>
-        </div>
-        <div class="social-media">
-            <a href="#"><img src="../assetsfacebook.png" alt="Facebook"></a>
-            <a href="#"><img src="../assetslinkedin.png" alt="Linkedin"></a>
-            <a href="#"><img src="../assetsinstagram.png" alt="Instagram"></a>
-        </div>
-        <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
-    </footer>    
-</body>
+      <div class="footer-links">
+        <a href="#">Sobre Nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="social-media">
+        <a href="#"><img src="../assets/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="../assets/linkedin.png" alt="Linkedin" /></a>
+        <a href="#"><img src="../assets/instagram.png" alt="Instagram" /></a>
+      </div>
+      <p>&copy; 2024 Geografando. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Search functionality -->
+    <script src="../scripts/search.js"></script>
+    <!-- Other scripts -->
+    <script src="../scripts/scripts.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadCategorias();
+      });
+
+      async function loadCategorias() {
+        try {
+          const response = await fetch("http://127.0.0.1:8000/categorias");
+          const categorias = await response.json();
+
+          // Agrupar categorias por tipo
+          const categoriasAgrupadas = {
+            LUGAR: categorias.filter((cat) => cat.tipo === "LUGAR"),
+            PAISAGEM: categorias.filter((cat) => cat.tipo === "PAISAGEM"),
+            TERRITORIO: categorias.filter((cat) => cat.tipo === "TERRITORIO"),
+            REGIAO: categorias.filter((cat) => cat.tipo === "REGIAO"),
+          };
+
+          const container = document.getElementById("categorias-container");
+
+          // Mapear os nomes das páginas
+          const paginasCategoria = {
+            LUGAR: "categoriasGeoLugar.html",
+            PAISAGEM: "categoriasGeoPaisagem.html",
+            TERRITORIO: "categoriasGeoTerritorio.html",
+            REGIAO: "categoriasGeoRegiao.html",
+          };
+
+          // Mapear os títulos em português
+          const titulosCategoria = {
+            LUGAR: "Lugar",
+            PAISAGEM: "Paisagem",
+            TERRITORIO: "Território",
+            REGIAO: "Região",
+          };
+
+          // Criar cards para cada tipo de categoria
+          for (const [tipo, items] of Object.entries(categoriasAgrupadas)) {
+            const col = document.createElement("div");
+            col.className = "col-md-6 col-lg-3 mb-4";
+
+            const card = document.createElement("div");
+            card.className = "card h-100";
+            card.style.cursor = "pointer";
+            card.onclick = () =>
+              (window.location.href = paginasCategoria[tipo]);
+
+            // Contar os tipos de conteúdo disponíveis
+            const conteudos = items.reduce(
+              (acc, item) => {
+                if (item.tem_texto) acc.textos++;
+                if (item.tem_pdf) acc.pdfs++;
+                if (item.tem_slides) acc.slides++;
+                if (item.tem_video) acc.videos++;
+                if (item.tem_foto) acc.fotos++;
+                return acc;
+              },
+              { textos: 0, pdfs: 0, slides: 0, videos: 0, fotos: 0 }
+            );
+
+            card.innerHTML = `
+              <div class="card-body">
+                <h5 class="card-title">${titulosCategoria[tipo]}</h5>
+                <p class="card-text">
+                  <strong>Conteúdos disponíveis:</strong><br>
+                  ${
+                    conteudos.textos > 0
+                      ? `<i class="fas fa-file-alt"></i> ${conteudos.textos} Textos<br>`
+                      : ""
+                  }
+                  ${
+                    conteudos.pdfs > 0
+                      ? `<i class="fas fa-file-pdf"></i> ${conteudos.pdfs} PDFs<br>`
+                      : ""
+                  }
+                  ${
+                    conteudos.slides > 0
+                      ? `<i class="fas fa-file-powerpoint"></i> ${conteudos.slides} Apresentações<br>`
+                      : ""
+                  }
+                  ${
+                    conteudos.videos > 0
+                      ? `<i class="fas fa-video"></i> ${conteudos.videos} Vídeos<br>`
+                      : ""
+                  }
+                  ${
+                    conteudos.fotos > 0
+                      ? `<i class="fas fa-image"></i> ${conteudos.fotos} Fotos`
+                      : ""
+                  }
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Total de itens: ${
+                  items.length
+                }</small>
+              </div>
+            `;
+
+            col.appendChild(card);
+            container.appendChild(col);
+          }
+        } catch (error) {
+          console.error("Erro ao carregar categorias:", error);
+        }
+      }
+    </script>
+  </body>
 </html>

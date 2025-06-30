@@ -47,7 +47,7 @@
       button {
         width: 100%;
         padding: 12px;
-        background-color: #4a90e2;
+        background-color: #e76f51;
         color: white;
         border: none;
         border-radius: 8px;
@@ -57,13 +57,21 @@
       }
 
       button:hover {
-        background-color: #357ab7;
+        opacity: 0.9;
       }
 
       #response {
         text-align: center;
         margin-top: 16px;
         font-weight: bold;
+      }
+
+      #response.error {
+        color: red;
+      }
+
+      #response.success {
+        color: green;
       }
     </style>
   </head>
@@ -83,35 +91,43 @@
         .getElementById("loginForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-
+          const responseEl = document.getElementById("response");
           const username = document.getElementById("username").value;
           const password = document.getElementById("password").value;
 
-          const formData = new URLSearchParams();
-          formData.append("username", username);
-          formData.append("password", password);
+          try {
+            const formData = new URLSearchParams();
+            formData.append("username", username);
+            formData.append("password", password);
 
-          const response = await fetch("http://127.0.0.1:8000/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData.toString(),
-          });
+            const response = await fetch("http://127.0.0.1:8000/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData.toString(),
+            });
 
-          const data = await response.json();
+            const data = await response.json();
 
-          if (response.ok) {
-            document.getElementById("response").textContent =
-              "Login bem-sucedido!";
-            window.localStorage.setItem("token", data.access_token);
-            window.location.href = "admin.html";
-          } else {
-            document.getElementById("response").style.color = "red";
+            if (response.ok) {
+              responseEl.className = "success";
+              responseEl.textContent = "Login bem-sucedido!";
+              window.localStorage.setItem("token", data.access_token);
+              setTimeout(() => {
+                window.location.href = "admin.html";
+              }, 1000);
+            } else {
+              responseEl.className = "error";
+              responseEl.textContent =
+                data.detail || "Erro ao fazer login. Tente novamente.";
+            }
+          } catch (error) {
+            responseEl.className = "error";
+            responseEl.textContent =
+              "Erro ao conectar com o servidor. Tente novamente.";
+            console.error("Erro:", error);
           }
-          document.getElementById("response").textContent = JSON.stringify(
-            data.detail
-          );
         });
     </script>
   </body>
