@@ -54,7 +54,7 @@
     const container = document.querySelector(".book-list");
 
     try {
-      const response = await fetch("/api/livros");
+      const response = await fetch("http://127.0.0.1:8000/livros");
       const livros = await response.json();
 
       container.innerHTML = "";
@@ -62,7 +62,7 @@
       livros.forEach(livro => {
         const item = document.createElement("div");
         item.className = "book-item";
-        const caminhoPdf = livro.caminhoPdf ? `/api/${livro.caminhoPdf}` : "#";
+        const caminhoPdf = livro.caminhoPdf ? `http://127.0.0.1:8000/${livro.caminhoPdf}` : "#";
 
         item.innerHTML = `
           <h3>${livro.titulo}</h3>

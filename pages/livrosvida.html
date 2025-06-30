@@ -51,7 +51,7 @@
       container.innerHTML = "<p>Carregando livros...</p>";
 
       try {
-        const response = await fetch("/api/livrosvida/");
+        const response = await fetch("http://127.0.0.1:8000/livrosvida/");
         if (!response.ok) throw new Error("Erro ao buscar livros");
 
         const livros = await response.json();
@@ -66,7 +66,7 @@
         livros.forEach(livro => {
           const card = document.createElement("div");
           card.className = "activity-card";
-          const caminhoPdf = livro.caminhoPdf ? `/api/${livro.caminhoPdf}` : "#";
+          const caminhoPdf = livro.caminhoPdf ? `http://127.0.0.1:8000/${livro.caminhoPdf}` : "#";
 
           card.innerHTML = `
             <h3>${livro.titulo}</h3>
