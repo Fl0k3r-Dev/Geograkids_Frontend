@@ -83,6 +83,15 @@
               Cadastro de Cartografias</a
             >
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-white"
+              href="#"
+              data-section="CategoriasGeo"
+            >
+              Cadastro de Categorias Geográficas</a
+            >
+          </li>
           <button
             style="background-color: #f55; color: #fff"
             onclick="logout()"
@@ -185,20 +194,40 @@
         Videos: ["Título", "Descrição", "Vídeo"],
         FichasAtividades: ["Título", "Descrição", "PDF"],
         FichasConteudos: ["Título", "Descrição", "PDF"],
-        Cartografia: ["Título", "Descrição", "Link"], //O LINK NESSE CASO AQUI, É O IFRAME GERADO DO GOOGLE PARA INCORPORAR EM WEBSITES OS MAPAS
+        Cartografia: ["Título", "Descrição", "Link"],
+        CategoriasGeo: [
+          "Título",
+          "Descrição",
+          "Tipo",
+          "Texto",
+          "PDF",
+          "Slides",
+          "Vídeo",
+          "Foto",
+        ],
       };
 
       async function fetchData(metodo, endpoint, payload, isJson = false) {
-        const url = `http://127.0.0.1:8000/${endpoint.toLowerCase().replace(/\/$/, "")}`;
-
-        const isFormData = payload instanceof FormData;
+        const url = `http://127.0.0.1:8000/${endpoint
+          .toLowerCase()
+          .replace(/\/$/, "")}`;
+        const token = localStorage.getItem("token");
 
         try {
-          if (isFormData) {
-            // Usa fetch nativo para FormData
+          const headers = {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          };
+
+          if (payload instanceof FormData) {
             const response = await fetch(url, {
               method: metodo,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+              },
               body: payload,
+              credentials: "include",
             });
 
             if (!response.ok) {
@@ -212,22 +241,31 @@
             console.log("Resposta da API:", result);
             return result;
           } else {
-            // Usa jQuery para JSON
-            const options = {
-              url,
-              type: metodo,
-              data: isJson ? JSON.stringify(payload) : payload,
-              processData: !isFormData,
-              contentType: isJson
-                ? "application/json"
-                : isFormData
-                ? false
-                : "application/x-www-form-urlencoded",
-            };
+            if (isJson) {
+              headers["Content-Type"] = "application/json";
+            } else {
+              headers["Content-Type"] = "application/x-www-form-urlencoded";
+            }
 
-            const response = await $.ajax(options);
-            console.log("Resposta da API:", response);
-            return response;
+            const response = await fetch(url, {
+              method: metodo,
+              headers: headers,
+              body: isJson
+                ? JSON.stringify(payload)
+                : new URLSearchParams(payload),
+              credentials: "include",
+            });
+
+            if (!response.ok) {
+              const err = await response.text();
+              throw new Error(
+                `Erro na requisição: ${response.status} - ${err}`
+              );
+            }
+
+            const result = await response.json();
+            console.log("Resposta da API:", result);
+            return result;
           }
         } catch (error) {
           console.error("Erro na requisição:", error);
@@ -263,84 +301,275 @@
           content += `</div>`;
           $("#content-area").html(content);
           return;
-        }
+        } else if (section === "CategoriasGeo") {
+          try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+              window.location.href = "index.html";
+              return;
+            }
 
-        if (!(section in fieldsBySection)) {
-          $("#content-area").html("<h3>Seção não encontrada</h3>");
-          return;
-        }
-
-        const fields = fieldsBySection[section];
-        let content = `<h3>${section.replace("cadastro", "Cadastro de ")}</h3>`;
-        content += `<button type="button" class="btn btn-primary mb-3" onclick='openModal("${section}", ${JSON.stringify(
-          fields
-        )})'>Novo</button>`;
-        content += `<table class="table"><thead><tr><th>ID</th>`;
-        fields.forEach((field) => (content += `<th>${field}</th>`));
-        content += `<th>Ações</th></tr></thead><tbody id="${section}-table"></tbody></table>`;
-        $("#content-area").html(content);
-
-        const data = await fetchData("GET", section);
-        if (!Array.isArray(data)) {
-          console.error(
-            "Erro: a API não retornou um array para",
-            section,
-            "Resposta:",
-            data
-          );
-          $(`#${section}-table`).html(
-            "<tr><td colspan='100%'>Erro ao carregar os dados</td></tr>"
-          );
-          return;
-        }
-
-        let rows = data
-          .map((row) => {
-            let rowHTML = `<tr><td>${row.id}</td>`;
-            fields.forEach((field) => {
-              let key = normalizeText(field);
-              rowHTML += `<td>${row[key] || ""}</td>`;
+            const response = await fetch("http://127.0.0.1:8000/categorias", {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             });
-            rowHTML += `<td>
-                      <button class="btn btn-warning me-2" onclick='openModal("${section}", ${JSON.stringify(
-              fields
-            )}, ${JSON.stringify(row)})'>Editar</button>
-                      <button class="btn btn-danger" onclick='deleteItem("${section}", ${
-              row.id
-            })'>Excluir</button>
-                    </td></tr>`;
-            return rowHTML;
-          })
-          .join("");
 
-        $(`#${section}-table`).html(rows);
+            if (!response.ok) {
+              if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem("token");
+                window.location.href = "index.html";
+                return;
+              }
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const categorias = await response.json();
+
+            let content = `
+              <h3>Cadastro de Categorias Geográficas</h3>
+              <button type="button" class="btn btn-primary mb-3" onclick='openModal("${section}", ${JSON.stringify(
+              fieldsBySection[section]
+            )})'>Nova Categoria</button>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Conteúdos</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+            `;
+
+            categorias.forEach((cat) => {
+              const conteudos = [];
+              if (cat.tem_texto) conteudos.push("Texto");
+              if (cat.tem_pdf) conteudos.push("PDF");
+              if (cat.tem_slides) conteudos.push("Slides");
+              if (cat.tem_video) conteudos.push("Vídeo");
+              if (cat.tem_foto) conteudos.push("Foto");
+
+              content += `
+                <tr>
+                  <td>${cat.id}</td>
+                  <td>${cat.titulo}</td>
+                  <td>${cat.descricao}</td>
+                  <td>${cat.tipo}</td>
+                  <td>${conteudos.join(", ") || "Nenhum"}</td>
+                  <td>
+                    <button class="btn btn-warning me-2" onclick='editCategoria(${
+                      cat.id
+                    })'>Editar</button>
+                    <button class="btn btn-danger" onclick='deleteItem("CategoriasGeo", ${
+                      cat.id
+                    })'>Excluir</button>
+                  </td>
+                </tr>
+              `;
+            });
+
+            content += "</tbody></table>";
+            $("#content-area").html(content);
+          } catch (error) {
+            console.error("Erro ao carregar categorias:", error);
+            if (
+              error.message.includes("401") ||
+              error.message.includes("403")
+            ) {
+              localStorage.removeItem("token");
+              window.location.href = "index.html";
+            } else {
+              $("#content-area").html(
+                "<p class='text-danger'>Erro ao carregar categorias</p>"
+              );
+            }
+          }
+        } else {
+          if (!(section in fieldsBySection)) {
+            $("#content-area").html("<h3>Seção não encontrada</h3>");
+            return;
+          }
+
+          const fields = fieldsBySection[section];
+          let content = `<h3>${section.replace(
+            "cadastro",
+            "Cadastro de "
+          )}</h3>`;
+          content += `<button type="button" class="btn btn-primary mb-3" onclick='openModal("${section}", ${JSON.stringify(
+            fields
+          )})'>Novo</button>`;
+          content += `<table class="table"><thead><tr><th>ID</th>`;
+          fields.forEach((field) => (content += `<th>${field}</th>`));
+          content += `<th>Ações</th></tr></thead><tbody id="${section}-table"></tbody></table>`;
+          $("#content-area").html(content);
+
+          const data = await fetchData("GET", section);
+          if (!Array.isArray(data)) {
+            console.error(
+              "Erro: a API não retornou um array para",
+              section,
+              "Resposta:",
+              data
+            );
+            $(`#${section}-table`).html(
+              "<tr><td colspan='100%'>Erro ao carregar os dados</td></tr>"
+            );
+            return;
+          }
+
+          let rows = data
+            .map((row) => {
+              let rowHTML = `<tr><td>${row.id}</td>`;
+              fields.forEach((field) => {
+                let key = normalizeText(field);
+                rowHTML += `<td>${row[key] || ""}</td>`;
+              });
+              rowHTML += `<td>
+                        <button class="btn btn-warning me-2" onclick='openModal("${section}", ${JSON.stringify(
+                fields
+              )}, ${JSON.stringify(row)})'>Editar</button>
+                        <button class="btn btn-danger" onclick='deleteItem("${section}", ${
+                row.id
+              })'>Excluir</button>
+                      </td></tr>`;
+              return rowHTML;
+            })
+            .join("");
+
+          $(`#${section}-table`).html(rows);
+        }
+      }
+
+      async function editCategoria(id) {
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            window.location.href = "index.html";
+            return;
+          }
+
+          const response = await fetch(
+            `http://127.0.0.1:8000/categorias/${id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+              localStorage.removeItem("token");
+              window.location.href = "index.html";
+              return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const categoria = await response.json();
+          openModal("CategoriasGeo", fieldsBySection["CategoriasGeo"], {
+            id: categoria.id,
+            titulo: categoria.titulo,
+            descricao: categoria.descricao,
+            tipo: categoria.tipo,
+            texto: categoria.texto || "",
+          });
+        } catch (error) {
+          console.error("Erro ao carregar categoria para edição:", error);
+          alert("Erro ao carregar categoria para edição");
+        }
       }
 
       function openModal(section, fields, data = {}) {
         if (typeof fields === "string") fields = JSON.parse(fields);
         $("#modalLabel").text(section.replace("cadastro", "Cadastro de "));
-        let modalContent = fields
-          .map((field) => {
-            const key = normalizeText(field);
-            if (
-              key.toLowerCase() === "imagem" ||
-              key.toLowerCase() === "video" ||
-              key.toLowerCase() === "pdf"
-            ) {
-              return `<div class="mb-3">
-            <label class="form-label">${field}</label>
-            <input type="file" class="form-control" id="${key}">
-            </div>`;
-            } else {
-              return `<div class="mb-3">
-            <label class="form-label">${field}</label>
-            <input type="text" class="form-control" id="${key}" value="${
-                data[key] || ""
+        let modalContent = "";
+
+        if (section === "CategoriasGeo") {
+          modalContent = `
+            <div class="mb-3">
+              <label class="form-label">Título</label>
+              <input type="text" class="form-control" id="titulo" value="${
+                data.titulo || ""
               }">
-            </div>`;
-            }
-          })
-          .join("");
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descrição</label>
+              <textarea class="form-control" id="descricao">${
+                data.descricao || ""
+              }</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Tipo</label>
+              <select class="form-control" id="tipo">
+                <option value="LUGAR" ${
+                  data.tipo === "LUGAR" ? "selected" : ""
+                }>Lugar</option>
+                <option value="PAISAGEM" ${
+                  data.tipo === "PAISAGEM" ? "selected" : ""
+                }>Paisagem</option>
+                <option value="TERRITORIO" ${
+                  data.tipo === "TERRITORIO" ? "selected" : ""
+                }>Território</option>
+                <option value="REGIAO" ${
+                  data.tipo === "REGIAO" ? "selected" : ""
+                }>Região</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Texto</label>
+              <textarea class="form-control" id="texto">${
+                data.texto || ""
+              }</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">PDF</label>
+              <input type="file" class="form-control" id="pdf" accept=".pdf">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Slides</label>
+              <input type="file" class="form-control" id="slides" accept=".ppt,.pptx,.pdf">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Vídeo</label>
+              <input type="file" class="form-control" id="video" accept="video/*">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Foto</label>
+              <input type="file" class="form-control" id="foto" accept="image/*">
+            </div>
+          `;
+        } else {
+          modalContent = fields
+            .map((field) => {
+              const key = normalizeText(field);
+              if (
+                key.toLowerCase() === "imagem" ||
+                key.toLowerCase() === "video" ||
+                key.toLowerCase() === "pdf"
+              ) {
+                return `<div class="mb-3">
+              <label class="form-label">${field}</label>
+              <input type="file" class="form-control" id="${key}">
+              </div>`;
+              } else {
+                return `<div class="mb-3">
+              <label class="form-label">${field}</label>
+              <input type="text" class="form-control" id="${key}" value="${
+                  data[key] || ""
+                }">
+              </div>`;
+              }
+            })
+            .join("");
+        }
+
         $("#modalBody").html(modalContent);
         $("#modalSubmit")
           .off("click")
@@ -351,72 +580,106 @@
       }
 
       async function saveItem(section, id) {
-        const fields = fieldsBySection[section];
-        const data = {};
-        const formData = new FormData();
-        let hasFiles = false;
-
-        // Coleta os campos comuns
-        fields.forEach((field) => {
-          const key = normalizeText(field);
-          const input = document.getElementById(key);
-          if (!input) {
-            console.warn(`Campo ${key} não encontrado!`);
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            window.location.href = "index.html";
             return;
           }
 
-          const value = input.value;
-          data[key] = value;
-          formData.append(key, value);
-        });
+          const formData = new FormData();
 
-        // Verifica se há arquivos
-        const fileInputs = ["pdf", "imagem", "video"];
-        fileInputs.forEach((fileType) => {
-          const input = document.getElementById(fileType);
-          if (input && input.files.length > 0) {
-            const file = input.files[0];
-            hasFiles = true;
+          if (section === "CategoriasGeo") {
+            formData.append("titulo", document.getElementById("titulo").value);
+            formData.append(
+              "descricao",
+              document.getElementById("descricao").value
+            );
+            formData.append("tipo", document.getElementById("tipo").value);
 
-            if (fileType === "pdf" && file.type === "application/pdf") {
-              formData.append("pdf", file);
-            } else if (
-              fileType === "imagem" &&
-              file.type.startsWith("image/")
-            ) {
-              formData.append("imagem", file);
-            } else if (fileType === "video" && file.type.startsWith("video/")) {
-              formData.append("video", file);
-            } else {
-              console.warn(
-                `Tipo de arquivo inválido para ${fileType}: ${file.type}`
-              );
+            const texto = document.getElementById("texto").value;
+            if (texto) {
+              formData.append("texto", texto);
             }
-          }
-        });
 
-        try {
-          let method = id ? "PUT" : "POST";
-          let url = id ? `${section}/${id}` : section;
+            const fileFields = {
+              pdf: "pdf_file",
+              slides: "slides_file",
+              video: "video_file",
+              foto: "foto_file",
+            };
 
-          if (id) {
-            formData.append("id", id);
-            data["id"] = id;
-          }
-
-          // Decide o tipo de envio
-          let bodyToSend;
-          let headers = {};
-
-          if (hasFiles) {
-            bodyToSend = formData;
-            // `Content-Type` será definido automaticamente pelo navegador
+            Object.entries(fileFields).forEach(([fieldId, apiField]) => {
+              const input = document.getElementById(fieldId);
+              if (input && input.files.length > 0) {
+                formData.append(apiField, input.files[0]);
+              }
+            });
           } else {
-            bodyToSend = JSON.stringify(data);
-            headers["Content-Type"] = "application/json";
+            const fields = fieldsBySection[section];
+            const data = {};
+
+            fields.forEach((field) => {
+              const key = normalizeText(field);
+              const input = document.getElementById(key);
+              if (!input) {
+                console.warn(`Campo ${key} não encontrado!`);
+                return;
+              }
+
+              const value = input.value;
+              data[key] = value;
+              formData.append(key, value);
+            });
+
+            // Verifica se há arquivos
+            const fileInputs = ["pdf", "imagem", "video"];
+            fileInputs.forEach((fileType) => {
+              const input = document.getElementById(fileType);
+              if (input && input.files.length > 0) {
+                const file = input.files[0];
+
+                if (fileType === "pdf" && file.type === "application/pdf") {
+                  formData.append("pdf", file);
+                } else if (
+                  fileType === "imagem" &&
+                  file.type.startsWith("image/")
+                ) {
+                  formData.append("imagem", file);
+                } else if (
+                  fileType === "video" &&
+                  file.type.startsWith("video/")
+                ) {
+                  formData.append("video", file);
+                }
+              }
+            });
           }
 
-          await fetchData(method, url, hasFiles ? formData : data, !hasFiles);
+          const method = id ? "PUT" : "POST";
+          const url = section === "CategoriasGeo" ? "categorias" : section;
+          const finalUrl = id ? `${url}/${id}` : url;
+
+          const response = await fetch(
+            `http://127.0.0.1:8000/${finalUrl.toLowerCase()}`,
+            {
+              method: method,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formData,
+            }
+          );
+
+          if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+              localStorage.removeItem("token");
+              window.location.href = "index.html";
+              return;
+            }
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Erro ao salvar");
+          }
 
           loadSection(section);
           bootstrap.Modal.getInstance(
@@ -424,14 +687,49 @@
           ).hide();
         } catch (error) {
           console.error("Erro ao salvar item:", error);
-          alert("Erro ao salvar. Veja o console.");
+          alert(error.message || "Erro ao salvar. Veja o console.");
         }
       }
 
       async function deleteItem(section, id) {
-        if (confirm("Tem certeza que deseja excluir?")) {
-          await fetchData("DELETE", `${section}/${id}`);
+        if (!confirm("Tem certeza que deseja excluir?")) return;
+
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            window.location.href = "index.html";
+            return;
+          }
+
+          const url =
+            section === "CategoriasGeo"
+              ? `categorias/${id}`
+              : `${section}/${id}`;
+
+          const response = await fetch(
+            `http://127.0.0.1:8000/${url.toLowerCase()}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+              localStorage.removeItem("token");
+              window.location.href = "index.html";
+              return;
+            }
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Erro ao excluir");
+          }
+
           loadSection(section);
+        } catch (error) {
+          console.error("Erro ao excluir item:", error);
+          alert(error.message || "Erro ao excluir. Veja o console.");
         }
       }
 
